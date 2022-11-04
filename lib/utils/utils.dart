@@ -64,6 +64,26 @@ class WeatherUtils {
     }
   }
 
+  static String getWeatherWall(int condition) {
+    if (condition < 300) {
+      return '🌩';
+    } else if (condition < 400) {
+      return '🌧';
+    } else if (condition < 600) {
+      return '☔️';
+    } else if (condition < 700) {
+      return '☃️';
+    } else if (condition < 800) {
+      return '🌫';
+    } else if (condition == 800) {
+      return '☀️';
+    } else if (condition <= 804) {
+      return '☁️';
+    } else {
+      return '🤷‍';
+    }
+  }
+
   static List<WeatherData> getAverageWeatherData(List<WeatherData> rawData) {
     List<WeatherData> res = [];
     int lengthOfBatch = 0;
@@ -71,10 +91,10 @@ class WeatherUtils {
     int daysConsidered = 0;
     double avgTemp = 0.0;
     int avgCondition = 0;
-    int dayRecorded = timestamp2DateTime(rawData[0].date).day;
+    int dayRecorded = DateTime.now().day;
     for (int i = 0; i < rawData.length; i++) {
       DateTime formattedTime = timestamp2DateTime(rawData[i].date);
-      if (daysConsidered != daysToConsider) {
+      if (daysConsidered != daysToConsider && formattedTime.day >= dayRecorded) {
         if (formattedTime.day == dayRecorded) {
           lengthOfBatch = lengthOfBatch + 1;
           avgTemp += rawData[i].temp;
@@ -82,7 +102,7 @@ class WeatherUtils {
         } else {
           daysConsidered = daysConsidered + 1;
           avgCondition = (avgCondition / lengthOfBatch).round();
-          avgTemp = avgTemp / lengthOfBatch;
+          avgTemp = (avgTemp / lengthOfBatch).toPrecision(2);
           dayRecorded = formattedTime.day;
           res.add(
             WeatherData(
@@ -98,8 +118,6 @@ class WeatherUtils {
           avgTemp = 0.0;
           lengthOfBatch = 0;
         }
-      } else {
-        break;
       }
     }
     return res;
@@ -113,10 +131,28 @@ class WeatherUtils {
       return false;
     }
   }
+
+  static suffixFormat({
+    required DateTime date,
+    required String formatBeforeSuffix,
+    required String formatAfterSuffix,
+  }) {
+    var suffix = "th";
+    var digit = date.day % 10;
+    if ((digit > 0 && digit < 4) && (date.day < 11 || date.day > 13)) {
+      suffix = ["st", "nd", "rd"][digit - 1];
+    }
+    return new DateFormat(formatBeforeSuffix + suffix + formatAfterSuffix)
+        .format(date);
+  }
 }
 
 bool isNullOrEmpty(String? str) {
   return str == null || str.isEmpty;
+}
+
+extension Ex on double {
+  double toPrecision(int n) => double.parse(toStringAsFixed(n));
 }
 
 DateTime timestamp2DateTime(dynamic date) =>

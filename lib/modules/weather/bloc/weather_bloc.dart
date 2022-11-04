@@ -72,13 +72,15 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
           var forecastRawRes = forecastResponse.data as ForecastData?;
           var refinedData =
               WeatherUtils.getAverageWeatherData(forecastRawRes?.list ?? []);
+          List<WeatherData> temp =[];
           for (var element in refinedData) {
             dbProvider?.createWeather(
               element,
               isForecastUpload: true,
             );
-            _forecastData?.list.add(element);
+            temp.add(element);
           }
+          _forecastData = ForecastData(list: temp);
           emit(
             ServerResponse(
               weatherData: _weatherData,
