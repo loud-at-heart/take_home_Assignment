@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:take_home_assignment/modules/main_route/bloc/main_route_bloc.dart';
+import 'package:take_home_assignment/modules/main_route/view/app_dashboard.dart';
 import 'package:take_home_assignment/modules/static/splash_screen.dart';
-import 'package:take_home_assignment/modules/weather/bloc/weather_bloc.dart';
-import 'package:take_home_assignment/modules/weather/data/weather_repository.dart';
-import 'package:take_home_assignment/modules/weather/view/location_screen.dart';
-
-import '../modules/weather/provider/db_provider.dart';
 
 class Routes {
   Routes._();
@@ -19,12 +15,9 @@ class Routes {
     switch (settings.name) {
       case mainScreen:
         return MaterialPageRoute(builder: (context) {
-          return BlocProvider<WeatherBloc>(
-            create: (context) => WeatherBloc(
-              weatherRepository: Injector().get<WeatherRepository>(),
-              dbProvider: Injector().get<DBProvider>(),
-            )..add(FetchLocationEvent()),
-            child: const LocationRoute(),
+          return BlocProvider<MainRouteBloc>(
+            create: (context) => MainRouteBloc(),
+            child: const AppDashboard(),
           );
         });
       default:

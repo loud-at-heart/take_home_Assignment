@@ -1,19 +1,19 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:take_home_assignment/webservice/http/uri_builder.dart';
 
 abstract class HttpClient {
+
   Future<ServerResponse> sendRequest(http.BaseRequest request);
 }
 
 class AppHttpClient extends HttpClient {
+  final UriBuilder uriBuilder;
+
   AppHttpClient({
     required this.uriBuilder,
   });
-
-  final UriBuilder uriBuilder;
 
   Future<ServerResponse> _makeServerCall(http.BaseRequest request) async {
     var httpClient = http.Client();
@@ -66,7 +66,7 @@ class ServerResponse {
   }
 
   Map<String, dynamic>? getBodyJsonMap() {
-    return jsonDecode(utf8.decode(response!.bodyBytes)) as Map<String, dynamic>;
+    return jsonDecode(utf8.decode(response!.bodyBytes));
   }
 
   getErrorType() {
@@ -96,7 +96,7 @@ http.Request createJSONRequest(
 }
 
 String _createLogMessage(String stringToLog) {
-  if (stringToLog.isEmpty) {
+  if (stringToLog == null || stringToLog.isEmpty) {
     return stringToLog;
   }
   return stringToLog;

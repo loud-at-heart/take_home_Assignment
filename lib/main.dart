@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:take_home_assignment/resources/network/network_connectivity.dart';
-import 'package:take_home_assignment/style/app_text_styles.dart';
 
 import 'di/di_initializer.dart';
 import 'navigation/routes.dart';
@@ -55,10 +54,7 @@ class _MyAppState extends State<MyApp> {
         home: Routes.splashPage,
         routes: Routes.appRoutes,
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: const Color(0xFF6E00F8),
-          fontFamily: AppFontFamilies.SpartanMB,
-        ),
+        theme: ThemeData(primaryColor: const Color(0xFF6E00F8)),
         onGenerateRoute: (s) => Routes.onGenerateRoute(s),
       ),
     );

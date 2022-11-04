@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:take_home_assignment/style/app_colors.dart';
 import 'package:take_home_assignment/style/app_dimens.dart';
+import 'package:take_home_assignment/style/spacing.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({Key? key, required this.content, this.onTap})
@@ -13,13 +14,13 @@ class AppButton extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
-          debugPrint('Tapped');
+          print('Tapped');
           onTap?.call();
         },
         child: AspectRatio(
           aspectRatio: MediaQuery.of(context).size.width / 72,
           child: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.primary,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(Dimensions.largeRadius20),

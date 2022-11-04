@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:take_home_assignment/navigation/routes.dart';
 
 class SplashPage extends StatefulWidget {
@@ -24,12 +25,15 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: FlutterLogo(
-          size: 300,
-          textColor: Colors.blue,
-          style: FlutterLogoStyle.stacked,
+        child: Container(
+          /** FlutterLogo Widget **/
+          child: const FlutterLogo(
+            size: 300,
+            textColor: Colors.blue,
+            style: FlutterLogoStyle.stacked,
+          ),
         ),
       ),
     );

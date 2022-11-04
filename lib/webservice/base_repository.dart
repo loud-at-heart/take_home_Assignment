@@ -4,9 +4,9 @@ import 'package:take_home_assignment/utils/mock_server.dart';
 import 'data_load_result.dart';
 
 class BaseRepository with MockServer {
-  BaseRepository(this.networkManager);
-
   final AppConnectivity networkManager;
+
+  BaseRepository(this.networkManager);
 
   Future<DataLoadResult<T>> getNoConnectionResult<T>() {
     return Future.value(

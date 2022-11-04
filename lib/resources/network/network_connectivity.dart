@@ -9,7 +9,7 @@ class AppConnectivity {
     hasConnection = await hasConnectivity();
     if (!hasConnection) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("No Internet Connection!")));
+          new SnackBar(content: new Text("No Internet Connection!")));
     }
     return hasConnection;
   }

@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AppFontFamilies {
-  static const String Montserrat = "Montserrat";
-  static const String Poppins = "Poppins";
-  static const String Roboto = "Roboto";
-  static const String SpartanMB = "Spartan MB";
-}
-
 class AppTextStyles {
 
-  static TextStyle regular(double textFont, Color textColor,
+  static TextStyle regularRoboto(double textFont, Color textColor,
       {double? height}) {
     return TextStyle(
       fontSize: textFont,
       fontWeight: AppFontWeight.normal,
       color: textColor,
-      height: height ?? 1.0,
+      height: height != null ? height : 1.0,
       decoration: TextDecoration.none,
     );
   }
 
-  static TextStyle medium(double textFont, Color textColor) {
+  static TextStyle mediumRoboto(double textFont, Color textColor) {
     return TextStyle(
       fontSize: textFont,
       fontWeight: AppFontWeight.medium,
@@ -29,14 +22,14 @@ class AppTextStyles {
     );
   }
 
-  static TextStyle bold(double textFont, Color textColor,
+  static TextStyle boldRoboto(double textFont, Color textColor,
       {double? height}) {
     return TextStyle(
       fontSize: textFont,
       fontWeight: AppFontWeight.bold,
       color: textColor,
       decoration: TextDecoration.none,
-      height: height ?? 1.0,
+      height: height != null ? height : 1.0,
     );
   }
 }
@@ -49,8 +42,6 @@ class AppFontWeight {
 }
 
 class FontSize {
-  static const double large100 = 100.0;
-  static const double large60 = 60.0;
   static const double large48 = 48.0;
   static const double large40 = 40.0;
   static const double large30 = 30.0;
