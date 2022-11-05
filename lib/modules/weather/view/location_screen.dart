@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:take_home_assignment/modules/weather/bloc/weather_bloc.dart';
 import 'package:take_home_assignment/style/app_colors.dart';
 import 'package:take_home_assignment/style/app_text_styles.dart';
 import 'package:take_home_assignment/style/spacing.dart';
 import 'package:take_home_assignment/utils/utils.dart';
 
+import '../../../components/error_handling_screen.dart';
+import '../../../components/loading_widget.dart';
 import '../../../components/weather_item.dart';
 
 class LocationRoute extends StatefulWidget {
@@ -25,12 +28,13 @@ class _LocationRouteState extends State<LocationRoute> {
           return Scaffold(
             body: Container(
               decoration: BoxDecoration(
-                // image: DecorationImage(
-                //   image: AssetImage('images/location_background.jpg'),
-                //   fit: BoxFit.cover,
-                //   colorFilter: ColorFilter.mode(
-                //       Colors.white.withOpacity(0.8), BlendMode.dstATop),
-                // ),
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: WeatherUtils.getWeatherGradient(
+                    state.weatherData?.condition ?? 0,
+                  ),
+                ),
                 color: AppColors.black,
               ),
               padding: const EdgeInsets.symmetric(
@@ -46,7 +50,21 @@ class _LocationRouteState extends State<LocationRoute> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         TextButton(
-                          onPressed: () async {},
+                          onPressed: () async {
+                            if (await WeatherUtils.internetConnectivity()) {
+                              BlocProvider.of<WeatherBloc>(context).add(
+                                FetchDataEvent(),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    "No Internet Connection!\nShowing saved content",
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                           child: Icon(
                             Icons.near_me,
                             size: 50.0,
@@ -96,6 +114,17 @@ class _LocationRouteState extends State<LocationRoute> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text(
+                        'Next 4 Days Forecast',
+                        style: AppTextStyles.bold(
+                          FontSize.large24,
+                          AppColors.white,
+                          height: 1.5,
+                        ),
+                      ),
+                    ),
                     SafeArea(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -103,18 +132,48 @@ class _LocationRouteState extends State<LocationRoute> {
                           height: 200.0,
                           child: (state.forecastData?.list ?? []).isNotEmpty
                               ? ListView.builder(
-                              itemCount: state.forecastData?.list.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) => WeatherItem(
-                                  weather: state.forecastData!.list.elementAt(index)))
+                                  itemCount: state.forecastData?.list.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) => WeatherItem(
+                                    weather: state.forecastData!.list
+                                        .elementAt(index),
+                                  ),
+                                )
                               : Container(),
                         ),
                       ),
-                    )
+                    ),
+                    Spacing.sizeBoxHt32,
                   ],
                 ),
               ),
             ),
+          );
+        } else if (state is LoadingState) {
+          return LoadingScreen();
+        } else if (state is NoInternetState) {
+          return ErrorHandlingScreen(
+            onButtonPressed: () {
+              BlocProvider.of<WeatherBloc>(context).add(FetchLocationEvent());
+            },
+            errorHandlingType: ErrorHandlingEnum.NO_INTERNET,
+          );
+        } else if (state is PermissionDeniedState) {
+          return ErrorHandlingScreen(
+            onButtonPressed: () async {
+              await Permission.location.isGranted
+                  ? BlocProvider.of<WeatherBloc>(context)
+                      .add(FetchLocationEvent())
+                  : openAppSettings();
+            },
+            errorHandlingType: ErrorHandlingEnum.NO_PERMISSION,
+          );
+        } else if (state is RequestFailedWithMessageState) {
+          return ErrorHandlingScreen(
+            onButtonPressed: () async {
+              BlocProvider.of<WeatherBloc>(context).add(FetchLocationEvent());
+            },
+            errorHandlingType: ErrorHandlingEnum.ERROR,
           );
         }
         return Container();
@@ -125,6 +184,10 @@ class _LocationRouteState extends State<LocationRoute> {
   }
 
   bool _isRebuildWidgetState(WeatherState state) {
-    return state is ServerResponse || state is LoadingState;
+    return state is ServerResponse ||
+        state is LoadingState ||
+        state is NoInternetState ||
+        state is PermissionDeniedState ||
+        state is RequestFailedWithMessageState;
   }
 }

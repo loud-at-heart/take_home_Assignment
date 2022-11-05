@@ -7,7 +7,8 @@ class DataLoadResult<T> {
       {this.data, this.error = LoadingError.NONE, this.errorMessage});
 
   bool isSuccessful() {
-    return (error == null || error == LoadingError.NONE) && errorMessage == null;
+    return (error == null || error == LoadingError.NONE) &&
+        errorMessage == null;
   }
 }
 
@@ -16,4 +17,10 @@ enum LoadingError {
   NO_CONNECTION,
   SERVER_REQUEST_FAILED,
   HTTP_INTERNAL_SERVER_ERROR,
+}
+
+enum ErrorHandlingEnum {
+  NO_INTERNET,
+  SERVER_DOWN,
+  ERROR,
 }

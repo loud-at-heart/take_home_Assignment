@@ -44,7 +44,7 @@ class DI {
     //DBProvider
     injector.map<DBProvider>(
       (injector) => DBProvider.db,
-      isSingleton: false,
+      isSingleton: true,
     );
   }
 }

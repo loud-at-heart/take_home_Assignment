@@ -23,7 +23,7 @@ class AppConnectivity {
         hasConnection = true;
       } else {
         hasConnection = false;
-        scaffoldKey.currentState!.showSnackBar(
+        scaffoldKey.currentState?.showSnackBar(
             new SnackBar(content: new Text("No Internet Connection!")));
       }
     });

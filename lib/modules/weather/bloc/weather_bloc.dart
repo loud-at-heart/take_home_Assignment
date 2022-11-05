@@ -41,7 +41,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     emit(LoadingState());
     if (!(await WeatherUtils.internetConnectivity())) {
       if (((await dbProvider?.getAllWeather()) ?? []).isEmpty) {
-        // TODO : emit Empty State
+        emit(NoInternetState());
       } else {
         List<WeatherData> res =
             await dbProvider?.getAllWeather() ?? <WeatherData>[];
@@ -112,8 +112,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     Emitter<WeatherState> emit,
   ) async {
     LocationData location;
-    location = await _location.getLocation();
     if (await _location.hasPermission() == PermissionStatus.granted) {
+      location = await _location.getLocation();
       _lat = location.latitude;
       _long = location.longitude;
       add(FetchDataEvent());

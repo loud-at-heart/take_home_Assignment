@@ -64,23 +64,56 @@ class WeatherUtils {
     }
   }
 
-  static String getWeatherWall(int condition) {
+  static List<Color> getWeatherGradient(int condition) {
     if (condition < 300) {
-      return '🌩';
+      return [
+        Color(0xff191919),
+        Color(0xff402C74),
+        Color(0xff7765FF),
+      ];
     } else if (condition < 400) {
-      return '🌧';
+      return [
+        Color(0xff75757B),
+        Color(0xffAFAEB2),
+        Color(0xffB1B2B3),
+      ];
     } else if (condition < 600) {
-      return '☔️';
+      return [
+        Color(0xff75757B),
+        Color(0xffAFAEB2),
+        Color(0xffB1B2B3),
+      ];
     } else if (condition < 700) {
-      return '☃️';
+      return [
+        Color(0xffCED9D9),
+        Color(0xff0077A8),
+        Color(0xff00172D),
+      ];
     } else if (condition < 800) {
-      return '🌫';
+      return [
+        Color(0xff5D6063),
+        Color(0xffA1A9AC),
+        Color(0xffC0C9CE),
+      ];
     } else if (condition == 800) {
-      return '☀️';
+      return [
+        Colors.yellow,
+        Colors.orange,
+        Colors.red,
+      ];
     } else if (condition <= 804) {
-      return '☁️';
+      return [
+      Color(0xffCED9D9),
+        Color(0xffAFAEB2),
+        Color(0xffB1B2B3),
+      ];
     } else {
-      return '🤷‍';
+      return [
+        Colors.yellow,
+        Colors.red,
+        Colors.indigo,
+        Colors.teal,
+      ];
     }
   }
 
@@ -94,7 +127,8 @@ class WeatherUtils {
     int dayRecorded = DateTime.now().day;
     for (int i = 0; i < rawData.length; i++) {
       DateTime formattedTime = timestamp2DateTime(rawData[i].date);
-      if (daysConsidered != daysToConsider && formattedTime.day >= dayRecorded) {
+      if (daysConsidered != daysToConsider &&
+          formattedTime.day >= dayRecorded) {
         if (formattedTime.day == dayRecorded) {
           lengthOfBatch = lengthOfBatch + 1;
           avgTemp += rawData[i].temp;
