@@ -1,4 +1,5 @@
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:take_home_assignment/modules/swiggyOtpLogin/data/swiggy_login_repository.dart';
 import 'package:take_home_assignment/modules/weather/data/weather_repository.dart';
 import 'package:take_home_assignment/resources/network/network_connectivity.dart';
 import 'package:take_home_assignment/webservice/http/http_client.dart';
@@ -19,8 +20,9 @@ class DI {
     //URI Builder
     injector.map<UriBuilder>(
       (injector) {
-        const openWeatherMapURL = 'api.openweathermap.org';
-        return UriBuilder(baseUrlAuthority: openWeatherMapURL);
+        // const openWeatherMapURL = 'api.openweathermap.org';
+        const swiggyLoginURL = 'www.swiggy.com';
+        return UriBuilder(baseUrlAuthority: swiggyLoginURL);
       },
       isSingleton: false,
     );
@@ -34,6 +36,16 @@ class DI {
     //Weather Repository
     injector.map<WeatherRepository>(
       (injector) => WeatherRepositoryImpl(
+        httpClient: injector.get(),
+        uriBuilder: injector.get(),
+        networkManager: injector.get(),
+      ),
+      isSingleton: false,
+    );
+
+    //SwiggyLogin Repository
+    injector.map<SwiggyLoginRepository>(
+      (injector) => SwiggyLoginRepositoryImpl(
         httpClient: injector.get(),
         uriBuilder: injector.get(),
         networkManager: injector.get(),

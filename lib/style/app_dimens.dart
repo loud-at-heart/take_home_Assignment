@@ -14,5 +14,7 @@ class Dimensions {
   static const double largeRadius20 = 20;
   static const double largeRadius24 = 24;
   static const double largeRadius30 = 30;
+  static const double size60 = 60;
+  static const double size12 = 12;
   static const double largeRadius100 = 100;
 }

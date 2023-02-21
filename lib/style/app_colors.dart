@@ -220,4 +220,8 @@ class AppColors {
   static const darkRed = Color(0xffCC364A);
   static const darkYellow = Color(0xffD9AC02);
   static const dashboardIconBorder =Color(0xffE0E0E0);
+  static const grey9f =Color(0xff9F9F9F);
+  static const Color lightBlack = Color(0xff1E1E24);
+  static const Color dangerColor = Color(0xffF04057);
+  static const Color successColor = Color(0xff4dcc89);
 }

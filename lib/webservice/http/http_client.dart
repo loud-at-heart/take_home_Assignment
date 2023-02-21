@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:take_home_assignment/session/session_manager.dart';
 import 'package:take_home_assignment/webservice/http/uri_builder.dart';
 
 abstract class HttpClient {
@@ -30,6 +31,7 @@ class AppHttpClient extends HttpClient {
           );
       serverResponse.response =
           await http.Response.fromStream(streamedResponse);
+      SessionManager().updateCookie(serverResponse.response);
       // if we get image - log message too long and useless
       debugPrint(
           'Response: ${_createLogMessage(serverResponse.getBodyJson())}');
@@ -44,9 +46,17 @@ class AppHttpClient extends HttpClient {
 
   @override
   Future<ServerResponse> sendRequest(http.BaseRequest request) async {
+    _setRequestHeaders(request);
     var serverResponse = await _makeServerCall(request);
 
     return Future.value(serverResponse);
+  }
+
+  _setRequestHeaders(http.BaseRequest request) async {
+    request.headers["Origin"] = 'https://www.swiggy.com';
+    request.headers["Content-Type"] = 'application/json';
+    if (SessionManager().getCookie != null)
+      request.headers["cookie"] = SessionManager().getCookie ?? "";
   }
 }
 
