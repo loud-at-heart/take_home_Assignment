@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppFontFamilies {
-  static const String Montserrat = "Montserrat";
-  static const String Poppins = "Poppins";
   static const String Roboto = "Roboto";
-  static const String SpartanMB = "Spartan MB";
 }
 
 class AppTextStyles {

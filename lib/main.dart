@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:take_home_assignment/resources/network/network_connectivity.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:take_home_assignment/generated/l10n.dart';
+import 'package:take_home_assignment/stores/dashboard/countdown_timer_store.dart';
+import 'package:take_home_assignment/style/app_colors.dart';
 import 'package:take_home_assignment/style/app_text_styles.dart';
 
-import 'di/di_initializer.dart';
+import 'di/components/di_initializer.dart';
 import 'navigation/routes.dart';
-import 'observer/app_bloc_observer.dart';
 
 void main() {
   defaultMain();
@@ -14,13 +16,8 @@ void main() {
 
 defaultMain() {
   WidgetsFlutterBinding.ensureInitialized();
-  BlocOverrides.runZoned(
-    () {
-      DI().initialize();
-      runApp(const MyApp());
-    },
-    blocObserver: AppBlocObserver(),
-  );
+  DI().initialize();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -31,12 +28,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final GlobalKey<ScaffoldMessengerState> scaffoldKey =
-      GlobalKey<ScaffoldMessengerState>();
-
   @override
   void initState() {
-    AppConnectivity().monitorConnectivity(scaffoldKey);
     super.initState();
   }
 
@@ -46,21 +39,40 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return WillPopScope(
-      onWillPop: () async {
-        SystemNavigator.pop(animated: true);
-        return true;
-      },
-      child: MaterialApp(
-        home: Routes.splashPage,
-        routes: Routes.appRoutes,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: const Color(0xFF6E00F8),
-          fontFamily: AppFontFamilies.SpartanMB,
+    return MultiProvider(
+      providers: [
+        Provider(
+          create: (_) => getIt<CountdownTimerStore>(),
         ),
-        onGenerateRoute: (s) => Routes.onGenerateRoute(s),
-      ),
+      ],
+      child: Builder(builder: (context) {
+        return WillPopScope(
+          onWillPop: () async {
+            SystemNavigator.pop(animated: true);
+            return true;
+          },
+          child: MaterialApp(
+            localizationsDelegates: const [
+              // ... app-specific localization delegate[s] here
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: Routes.splashPage,
+            routes: Routes.appRoutes,
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primaryColor: AppColors.primary,
+              fontFamily: AppFontFamilies.Roboto,
+              appBarTheme: AppBarTheme(
+                color: AppColors.appbarColor,
+              ),
+            ),
+            onGenerateRoute: (s) => Routes.onGenerateRoute(s),
+          ),
+        );
+      }),
     );
   }
 }
