@@ -10,7 +10,5 @@ class DI {
   initialize() {
     // async singletons:----------------------------------------------------------
     getIt.registerSingletonAsync<SharedPreferences>(() => LocalModule.provideSharedPreferences());
-    // stores:--------------------------------------------------------------------
-    getIt.registerSingleton(CountdownTimerStore());
   }
 }

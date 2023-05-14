@@ -63,12 +63,14 @@ class _MyAppState extends State<MyApp> {
             routes: Routes.appRoutes,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primaryColor: AppColors.primary,
-              fontFamily: AppFontFamilies.Roboto,
-              appBarTheme: AppBarTheme(
-                color: AppColors.appbarColor,
-              ),
-            ),
+                primaryColor: AppColors.primary,
+                fontFamily: AppFontFamilies.Roboto,
+                appBarTheme: AppBarTheme(
+                  color: AppColors.appbarColor,
+                ),
+                floatingActionButtonTheme: FloatingActionButtonThemeData(
+                  backgroundColor: AppColors.fabColor,
+                )),
             onGenerateRoute: (s) => Routes.onGenerateRoute(s),
           ),
         );

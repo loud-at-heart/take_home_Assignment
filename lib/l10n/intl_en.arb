@@ -1,4 +1,13 @@
 {
   "helloFlutter": "Hello World",
-  "homeTitle": "Potato Timer"
+  "homeTitle": "Potato Timer",
+  "addTask": "Add Task",
+  "hourHint": "HH",
+  "minHint": "MM",
+  "secHint": "SS",
+  "titleText": "Title",
+  "hintTitleText": "Superdesigner",
+  "subtitleText": "Description",
+  "hintSubtitleText": "e.g. john@gmail.com",
+  "duration": "Duration"
 }

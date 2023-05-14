@@ -178,6 +178,8 @@ class AppColors {
   static const Color color464646 = Color(0xff464646);
   static const Color litePink = Color(0xffF8EAFE);
   static const appbarColor = Color(0xff216C2E);
+  static const buttonColor = Color(0xffE1DFFF);
+  static const fabColor = Color(0xffB6EAFF);
   static const Color colorF7F7F7 = Color(0xffF7F7F7);
   static const Color colorE6E6E6 = Color(0xffE6E6E6);
   static const Color color333333 = Color(0xff333333);
@@ -218,6 +220,8 @@ class AppColors {
   static const timerCardColor = Color(0xffFBFCFE);
   static const timerTitleColor = Color(0xff216C2E);
   static const timerSubtitleColor = Color(0xff006782);
+  static const hintColor = Color(0xff40484C);
+  static const hintTbColor = Color(0xff70787D);
   static const redLightest = Color(0xffFEEBEE);
   static const philippineSilver = Color(0xffB7B7B7);
   static const darkRed = Color(0xffCC364A);

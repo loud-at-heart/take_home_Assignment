@@ -12,4 +12,5 @@ class AppImages {
   static const String iPlay = _svgPath + 'iPlay--Button-Solid.svg';
   static const String iStop = _svgPath + 'iStop-Button-Solid.svg';
   static const String iWave = _svgPath + 'iSound-wave-Solid.svg';
+  static const String iAdd = _svgPath + 'iAdd-Line.svg';
 }

@@ -5,9 +5,7 @@ class AppFontFamilies {
 }
 
 class AppTextStyles {
-
-  static TextStyle regular(double textFont, Color textColor,
-      {double? height}) {
+  static TextStyle regular(double textFont, Color textColor, {double? height}) {
     return TextStyle(
       fontSize: textFont,
       fontWeight: AppFontWeight.normal,
@@ -17,17 +15,17 @@ class AppTextStyles {
     );
   }
 
-  static TextStyle medium(double textFont, Color textColor) {
+  static TextStyle medium(double textFont, Color textColor, {double? height}) {
     return TextStyle(
       fontSize: textFont,
       fontWeight: AppFontWeight.medium,
       color: textColor,
       decoration: TextDecoration.none,
+      height: height ?? 1.0,
     );
   }
 
-  static TextStyle bold(double textFont, Color textColor,
-      {double? height}) {
+  static TextStyle bold(double textFont, Color textColor, {double? height}) {
     return TextStyle(
       fontSize: textFont,
       fontWeight: AppFontWeight.bold,
@@ -48,6 +46,7 @@ class AppFontWeight {
 class FontSize {
   static const double large100 = 100.0;
   static const double large60 = 60.0;
+  static const double large57 = 57.0;
   static const double large48 = 48.0;
   static const double large40 = 40.0;
   static const double large30 = 30.0;

@@ -69,6 +69,96 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Add Task`
+  String get addTask {
+    return Intl.message(
+      'Add Task',
+      name: 'addTask',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `HH`
+  String get hourHint {
+    return Intl.message(
+      'HH',
+      name: 'hourHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MM`
+  String get minHint {
+    return Intl.message(
+      'MM',
+      name: 'minHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SS`
+  String get secHint {
+    return Intl.message(
+      'SS',
+      name: 'secHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title`
+  String get titleText {
+    return Intl.message(
+      'Title',
+      name: 'titleText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Superdesigner`
+  String get hintTitleText {
+    return Intl.message(
+      'Superdesigner',
+      name: 'hintTitleText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get subtitleText {
+    return Intl.message(
+      'Description',
+      name: 'subtitleText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g. john@gmail.com`
+  String get hintSubtitleText {
+    return Intl.message(
+      'e.g. john@gmail.com',
+      name: 'hintSubtitleText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duration`
+  String get duration {
+    return Intl.message(
+      'Duration',
+      name: 'duration',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

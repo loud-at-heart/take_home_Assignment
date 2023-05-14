@@ -22,7 +22,17 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addTask": MessageLookupByLibrary.simpleMessage("Add Task"),
+        "duration": MessageLookupByLibrary.simpleMessage("Duration"),
         "helloFlutter": MessageLookupByLibrary.simpleMessage("Hello World"),
-        "homeTitle": MessageLookupByLibrary.simpleMessage("Potato Timer")
+        "hintSubtitleText":
+            MessageLookupByLibrary.simpleMessage("e.g. john@gmail.com"),
+        "hintTitleText": MessageLookupByLibrary.simpleMessage("Superdesigner"),
+        "homeTitle": MessageLookupByLibrary.simpleMessage("Potato Timer"),
+        "hourHint": MessageLookupByLibrary.simpleMessage("HH"),
+        "minHint": MessageLookupByLibrary.simpleMessage("MM"),
+        "secHint": MessageLookupByLibrary.simpleMessage("SS"),
+        "subtitleText": MessageLookupByLibrary.simpleMessage("Description"),
+        "titleText": MessageLookupByLibrary.simpleMessage("Title")
       };
 }

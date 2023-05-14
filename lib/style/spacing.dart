@@ -4,6 +4,7 @@ class Spacing {
   Spacing._();
 
   static const double margin32 = 32.0;
+  static const double margin36 = 36.0;
   static const double margin15 = 15.0;
   static const double margin16 = 16.0;
   static const double margin18 = 18.0;
@@ -11,15 +12,18 @@ class Spacing {
   static const double margin12 = 12.0;
   static const double margin14 = 14.0;
   static const double margin24 = 24.0;
+  static const double margin28 = 28.0;
   static const double margin22 = 22.0;
   static const double margin58 = 58.0;
   static const double margin60 = 60.0;
   static const double margin65 = 65.0;
   static const double margin74 = 74.0;
+  static const double margin78 = 78.0;
   static const double margin9 = 9.0;
   static const double margin8 = 8.0;
   static const double margin5 = 5.0;
   static const double margin40 = 40.0;
+  static const double margin42 = 42.0;
   static const double margin48 = 48.0;
   static const double margin50 = 50.0;
   static const double margin10 = 10.0;
