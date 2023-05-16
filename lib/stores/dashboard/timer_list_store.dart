@@ -49,7 +49,6 @@ abstract class _TimerListStore with Store {
   void removeTimer(ITimerModel timer) {
     dbManager?.deleteTimer(timer);
     timerList.removeWhere((t) => t.id == timer.id);
-    _loadList();
   }
 
   @action
@@ -63,6 +62,7 @@ abstract class _TimerListStore with Store {
     );
     dbManager?.updateTimer(updatedTimer);
     timerList[timerList.indexWhere((t) => t.id == timer.id)] = updatedTimer;
-    _loadList();
+    var temp =  timerList.removeAt(timerList.indexWhere((t) => t.id == timer.id));
+    timerList.insert(0, temp);
   }
 }
