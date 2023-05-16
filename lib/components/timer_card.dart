@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:take_home_assignment/components/i_potato_timer.dart';
 import 'package:take_home_assignment/generated/l10n.dart';
 import 'package:take_home_assignment/models/i_timer_model.dart';
+import 'package:take_home_assignment/stores/dashboard/timer_card_store.dart';
 import 'package:take_home_assignment/style/app_colors.dart';
 import 'package:take_home_assignment/style/app_dimens.dart';
 import 'package:take_home_assignment/style/app_text_styles.dart';
@@ -12,20 +14,24 @@ class TimerCard extends StatefulWidget {
     Key? key,
     this.timerModel,
     this.onStop,
-    this.onFinished,
-    this.isFinished = false,
   }) : super(key: key);
 
   final ITimerModel? timerModel;
   final VoidCallback? onStop;
-  final VoidCallback? onFinished;
-  final bool isFinished;
 
   @override
   State<TimerCard> createState() => _TimerCardState();
 }
 
 class _TimerCardState extends State<TimerCard> {
+  late TimerCardStore _timerCardStore;
+
+  @override
+  void initState() {
+    _timerCardStore = TimerCardStore();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -39,16 +45,20 @@ class _TimerCardState extends State<TimerCard> {
       child: Column(
         children: [
           Spacing.sizeBoxHt25,
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: Spacing.defaultMargin),
-            child: IPotatoTimer(
-              timerModel: widget.timerModel,
-              onStop: widget.onStop,
-              onFinished: widget.onFinished,
-              isFinished: widget.isFinished,
-            ),
-          ),
+          Observer(builder: (context) {
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: Spacing.defaultMargin),
+              child: IPotatoTimer(
+                timerModel: widget.timerModel,
+                onStop: widget.onStop,
+                onFinished: () async {
+                  await _timerCardStore.finishedTimer(widget.timerModel!);
+                },
+                isFinished: _timerCardStore.isFinished,
+              ),
+            );
+          }),
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: Spacing.defaultMargin),
@@ -71,27 +81,29 @@ class _TimerCardState extends State<TimerCard> {
               ),
             ),
           ),
-          widget.isFinished
-              ? InkWell(
-                  child: Container(
-                    height: Spacing.margin40,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(Dimensions.largeRadius20),
-                      color: AppColors.buttonColor,
-                    ),
-                    child: Center(
-                      child: Text(
-                        AppLocalizations.of(context).markComplete,
-                        style: AppTextStyles.medium(
-                            FontSize.normal, AppColors.color191919),
+          Observer(builder: (context) {
+            return _timerCardStore.isFinished
+                ? InkWell(
+                    child: Container(
+                      height: Spacing.margin40,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.largeRadius20),
+                        color: AppColors.buttonColor,
+                      ),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context).markComplete,
+                          style: AppTextStyles.medium(
+                              FontSize.normal, AppColors.color191919),
+                        ),
                       ),
                     ),
-                  ),
-                  onTap: widget.onStop,
-                )
-              : Spacing.sizeBoxHt25,
+                    onTap: widget.onStop,
+                  )
+                : Spacing.sizeBoxHt25;
+          }),
         ],
       ),
     );

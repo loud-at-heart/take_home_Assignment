@@ -50,20 +50,4 @@ abstract class _TimerListStore with Store {
     dbManager?.deleteTimer(timer);
     timerList.removeWhere((t) => t.id == timer.id);
   }
-
-  @action
-  void finishedTimer(ITimerModel timer) {
-    var updatedTimer = ITimerModel(
-      id: timer.id,
-      title: timer.title,
-      subtitle: timer.subtitle,
-      second: timer.second,
-      finished: true,
-    );
-    dbManager?.updateTimer(updatedTimer);
-    // _loadList();
-    timerList[timerList.indexWhere((t) => t.id == timer.id)] = updatedTimer;
-    var temp =  timerList.removeAt(timerList.indexWhere((t) => t.id == timer.id));
-    timerList.insert(0, temp);
-  }
 }

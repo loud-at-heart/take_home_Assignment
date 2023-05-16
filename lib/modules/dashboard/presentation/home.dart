@@ -135,6 +135,7 @@ class _TimerHomeState extends State<TimerHome>{
           return _timerListStore.isLoading
               ? LoadingScreen()
               : ListView.builder(
+            key: const PageStorageKey<String>("my_list"),
                   itemCount: _timerListStore.timerList.length,
                   itemBuilder: (context, index) {
                     return _timerListStore.timerList.length > 0
@@ -143,10 +144,6 @@ class _TimerHomeState extends State<TimerHome>{
                               timerModel: _timerListStore.timerList[index],
                               onStop: () => _timerListStore.removeTimer(
                                   _timerListStore.timerList[index]),
-                              onFinished: () => _timerListStore.finishedTimer(
-                                  _timerListStore.timerList[index]),
-                              isFinished:
-                                  _timerListStore.timerList[index].finished,
                             ),
                           )
                         : SizedBox.shrink();

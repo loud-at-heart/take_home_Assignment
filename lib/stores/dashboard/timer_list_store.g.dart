@@ -83,17 +83,6 @@ mixin _$TimerListStore on _TimerListStore, Store {
   }
 
   @override
-  void finishedTimer(ITimerModel timer) {
-    final _$actionInfo = _$_TimerListStoreActionController.startAction(
-        name: '_TimerListStore.finishedTimer');
-    try {
-      return super.finishedTimer(timer);
-    } finally {
-      _$_TimerListStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 timerList: ${timerList},
