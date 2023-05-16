@@ -9,5 +9,8 @@
   "hintTitleText": "Superdesigner",
   "subtitleText": "Description",
   "hintSubtitleText": "e.g. john@gmail.com",
-  "duration": "Duration"
+  "duration": "Duration",
+  "titleError": "Please enter a title",
+  "subtitleError": "Please enter description",
+  "markComplete": "MARK COMPLETE"
 }

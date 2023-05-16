@@ -159,6 +159,36 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Please enter a title`
+  String get titleError {
+    return Intl.message(
+      'Please enter a title',
+      name: 'titleError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter description`
+  String get subtitleError {
+    return Intl.message(
+      'Please enter description',
+      name: 'subtitleError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MARK COMPLETE`
+  String get markComplete {
+    return Intl.message(
+      'MARK COMPLETE',
+      name: 'markComplete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -39,42 +39,33 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MultiProvider(
-      providers: [
-        Provider(
-          create: (_) => getIt<CountdownTimerStore>(),
-        ),
-      ],
-      child: Builder(builder: (context) {
-        return WillPopScope(
-          onWillPop: () async {
-            SystemNavigator.pop(animated: true);
-            return true;
-          },
-          child: MaterialApp(
-            localizationsDelegates: const [
-              // ... app-specific localization delegate[s] here
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            home: Routes.splashPage,
-            routes: Routes.appRoutes,
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-                primaryColor: AppColors.primary,
-                fontFamily: AppFontFamilies.Roboto,
-                appBarTheme: AppBarTheme(
-                  color: AppColors.appbarColor,
-                ),
-                floatingActionButtonTheme: FloatingActionButtonThemeData(
-                  backgroundColor: AppColors.fabColor,
-                )),
-            onGenerateRoute: (s) => Routes.onGenerateRoute(s),
-          ),
-        );
-      }),
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop(animated: true);
+        return true;
+      },
+      child: MaterialApp(
+        localizationsDelegates: const [
+          // ... app-specific localization delegate[s] here
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        home: Routes.splashPage,
+        routes: Routes.appRoutes,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            primaryColor: AppColors.primary,
+            fontFamily: AppFontFamilies.Roboto,
+            appBarTheme: AppBarTheme(
+              color: AppColors.appbarColor,
+            ),
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: AppColors.fabColor,
+            )),
+        onGenerateRoute: (s) => Routes.onGenerateRoute(s),
+      ),
     );
   }
 }

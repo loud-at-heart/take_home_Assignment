@@ -49,26 +49,42 @@ mixin _$CountdownTimerStore on _CountdownTimerStoreBase, Store {
     });
   }
 
+  late final _$isFinishedAtom =
+      Atom(name: '_CountdownTimerStoreBase.isFinished', context: context);
+
+  @override
+  bool get isFinished {
+    _$isFinishedAtom.reportRead();
+    return super.isFinished;
+  }
+
+  @override
+  set isFinished(bool value) {
+    _$isFinishedAtom.reportWrite(value, super.isFinished, () {
+      super.isFinished = value;
+    });
+  }
+
   late final _$_CountdownTimerStoreBaseActionController =
       ActionController(name: '_CountdownTimerStoreBase', context: context);
 
   @override
-  void toggleTimer() {
+  void toggleTimer(ITimerModel? timerModel) {
     final _$actionInfo = _$_CountdownTimerStoreBaseActionController.startAction(
         name: '_CountdownTimerStoreBase.toggleTimer');
     try {
-      return super.toggleTimer();
+      return super.toggleTimer(timerModel);
     } finally {
       _$_CountdownTimerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void stopTimer() {
+  void stopTimer(int secRemaining) {
     final _$actionInfo = _$_CountdownTimerStoreBaseActionController.startAction(
         name: '_CountdownTimerStoreBase.stopTimer');
     try {
-      return super.stopTimer();
+      return super.stopTimer(secRemaining);
     } finally {
       _$_CountdownTimerStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -79,6 +95,7 @@ mixin _$CountdownTimerStore on _CountdownTimerStoreBase, Store {
     return '''
 secondsRemaining: ${secondsRemaining},
 isRunning: ${isRunning},
+isFinished: ${isFinished},
 timerText: ${timerText}
     ''';
   }

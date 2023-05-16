@@ -1,27 +1,34 @@
 import 'dart:async';
+
 import 'package:mobx/mobx.dart';
+import 'package:take_home_assignment/models/i_timer_model.dart';
+
 part 'countdown_timer_store.g.dart';
 
 class CountdownTimerStore = _CountdownTimerStoreBase with _$CountdownTimerStore;
 
 abstract class _CountdownTimerStoreBase with Store {
   @observable
-  int secondsRemaining = 100;
+  int secondsRemaining = 0;
 
   @observable
   bool isRunning = false;
 
+  @observable
+  bool isFinished = false;
+
   Timer? _timer;
 
   @action
-  void toggleTimer() {
+  void toggleTimer(ITimerModel? timerModel) {
     if (isRunning) {
       _timer?.cancel();
     } else {
       _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-        secondsRemaining--;
+        secondsRemaining = secondsRemaining - 1;
         if (secondsRemaining == 0) {
           _timer?.cancel();
+          isFinished = true;
         }
       });
     }
@@ -29,9 +36,9 @@ abstract class _CountdownTimerStoreBase with Store {
   }
 
   @action
-  void stopTimer() {
+  void stopTimer(int secRemaining) {
     _timer?.cancel();
-    secondsRemaining = 100;
+    secondsRemaining = secRemaining;
     isRunning = false;
   }
 

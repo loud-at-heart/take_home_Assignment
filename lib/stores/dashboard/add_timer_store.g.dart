@@ -16,6 +16,12 @@ mixin _$AddTimerStore on _AddTimerStore, Store {
       (_$durationComputed ??= Computed<Duration>(() => super.duration,
               name: '_AddTimerStore.duration'))
           .value;
+  Computed<int>? _$t2sComputed;
+
+  @override
+  int get t2s => (_$t2sComputed ??=
+          Computed<int>(() => super.t2s, name: '_AddTimerStore.t2s'))
+      .value;
 
   late final _$hoursAtom = Atom(name: '_AddTimerStore.hours', context: context);
 
@@ -64,6 +70,22 @@ mixin _$AddTimerStore on _AddTimerStore, Store {
     });
   }
 
+  late final _$showDurationErrorAtom =
+      Atom(name: '_AddTimerStore.showDurationError', context: context);
+
+  @override
+  bool get showDurationError {
+    _$showDurationErrorAtom.reportRead();
+    return super.showDurationError;
+  }
+
+  @override
+  set showDurationError(bool value) {
+    _$showDurationErrorAtom.reportWrite(value, super.showDurationError, () {
+      super.showDurationError = value;
+    });
+  }
+
   late final _$_AddTimerStoreActionController =
       ActionController(name: '_AddTimerStore', context: context);
 
@@ -79,12 +101,25 @@ mixin _$AddTimerStore on _AddTimerStore, Store {
   }
 
   @override
+  void setDurationError(bool res) {
+    final _$actionInfo = _$_AddTimerStoreActionController.startAction(
+        name: '_AddTimerStore.setDurationError');
+    try {
+      return super.setDurationError(res);
+    } finally {
+      _$_AddTimerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 hours: ${hours},
 minutes: ${minutes},
 seconds: ${seconds},
-duration: ${duration}
+showDurationError: ${showDurationError},
+duration: ${duration},
+t2s: ${t2s}
     ''';
   }
 }

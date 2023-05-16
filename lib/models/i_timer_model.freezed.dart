@@ -20,9 +20,11 @@ ITimerModel _$ITimerModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ITimerModel {
+  int? get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get subtitle => throw _privateConstructorUsedError;
   int? get second => throw _privateConstructorUsedError;
+  bool get finished => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,8 @@ abstract class $ITimerModelCopyWith<$Res> {
           ITimerModel value, $Res Function(ITimerModel) then) =
       _$ITimerModelCopyWithImpl<$Res, ITimerModel>;
   @useResult
-  $Res call({String? title, String? subtitle, int? second});
+  $Res call(
+      {int? id, String? title, String? subtitle, int? second, bool finished});
 }
 
 /// @nodoc
@@ -52,11 +55,17 @@ class _$ITimerModelCopyWithImpl<$Res, $Val extends ITimerModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = freezed,
     Object? subtitle = freezed,
     Object? second = freezed,
+    Object? finished = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -69,6 +78,10 @@ class _$ITimerModelCopyWithImpl<$Res, $Val extends ITimerModel>
           ? _value.second
           : second // ignore: cast_nullable_to_non_nullable
               as int?,
+      finished: null == finished
+          ? _value.finished
+          : finished // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -81,7 +94,8 @@ abstract class _$$_ITimerModelCopyWith<$Res>
       __$$_ITimerModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? title, String? subtitle, int? second});
+  $Res call(
+      {int? id, String? title, String? subtitle, int? second, bool finished});
 }
 
 /// @nodoc
@@ -95,11 +109,17 @@ class __$$_ITimerModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = freezed,
     Object? subtitle = freezed,
     Object? second = freezed,
+    Object? finished = null,
   }) {
     return _then(_$_ITimerModel(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -112,6 +132,10 @@ class __$$_ITimerModelCopyWithImpl<$Res>
           ? _value.second
           : second // ignore: cast_nullable_to_non_nullable
               as int?,
+      finished: null == finished
+          ? _value.finished
+          : finished // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -119,21 +143,27 @@ class __$$_ITimerModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ITimerModel implements _ITimerModel {
-  const _$_ITimerModel({this.title, this.subtitle, this.second});
+  const _$_ITimerModel(
+      {this.id, this.title, this.subtitle, this.second, this.finished = false});
 
   factory _$_ITimerModel.fromJson(Map<String, dynamic> json) =>
       _$$_ITimerModelFromJson(json);
 
+  @override
+  final int? id;
   @override
   final String? title;
   @override
   final String? subtitle;
   @override
   final int? second;
+  @override
+  @JsonKey()
+  final bool finished;
 
   @override
   String toString() {
-    return 'ITimerModel(title: $title, subtitle: $subtitle, second: $second)';
+    return 'ITimerModel(id: $id, title: $title, subtitle: $subtitle, second: $second, finished: $finished)';
   }
 
   @override
@@ -141,15 +171,19 @@ class _$_ITimerModel implements _ITimerModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ITimerModel &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.subtitle, subtitle) ||
                 other.subtitle == subtitle) &&
-            (identical(other.second, second) || other.second == second));
+            (identical(other.second, second) || other.second == second) &&
+            (identical(other.finished, finished) ||
+                other.finished == finished));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, subtitle, second);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, subtitle, second, finished);
 
   @JsonKey(ignore: true)
   @override
@@ -167,19 +201,25 @@ class _$_ITimerModel implements _ITimerModel {
 
 abstract class _ITimerModel implements ITimerModel {
   const factory _ITimerModel(
-      {final String? title,
+      {final int? id,
+      final String? title,
       final String? subtitle,
-      final int? second}) = _$_ITimerModel;
+      final int? second,
+      final bool finished}) = _$_ITimerModel;
 
   factory _ITimerModel.fromJson(Map<String, dynamic> json) =
       _$_ITimerModel.fromJson;
 
+  @override
+  int? get id;
   @override
   String? get title;
   @override
   String? get subtitle;
   @override
   int? get second;
+  @override
+  bool get finished;
   @override
   @JsonKey(ignore: true)
   _$$_ITimerModelCopyWith<_$_ITimerModel> get copyWith =>

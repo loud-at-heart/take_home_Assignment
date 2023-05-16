@@ -30,9 +30,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "hintTitleText": MessageLookupByLibrary.simpleMessage("Superdesigner"),
         "homeTitle": MessageLookupByLibrary.simpleMessage("Potato Timer"),
         "hourHint": MessageLookupByLibrary.simpleMessage("HH"),
+        "markComplete": MessageLookupByLibrary.simpleMessage("MARK COMPLETE"),
         "minHint": MessageLookupByLibrary.simpleMessage("MM"),
         "secHint": MessageLookupByLibrary.simpleMessage("SS"),
+        "subtitleError":
+            MessageLookupByLibrary.simpleMessage("Please enter description"),
         "subtitleText": MessageLookupByLibrary.simpleMessage("Description"),
+        "titleError":
+            MessageLookupByLibrary.simpleMessage("Please enter a title"),
         "titleText": MessageLookupByLibrary.simpleMessage("Title")
       };
 }
