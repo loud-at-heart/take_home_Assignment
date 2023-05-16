@@ -189,6 +189,16 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `No timers active.\nPress here to start a new one`
+  String get noTimerLabel {
+    return Intl.message(
+      'No timers active.\nPress here to start a new one',
+      name: 'noTimerLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -12,5 +12,6 @@
   "duration": "Duration",
   "titleError": "Please enter a title",
   "subtitleError": "Please enter description",
-  "markComplete": "MARK COMPLETE"
+  "markComplete": "MARK COMPLETE",
+  "noTimerLabel": "No timers active.\nPress here to start a new one"
 }

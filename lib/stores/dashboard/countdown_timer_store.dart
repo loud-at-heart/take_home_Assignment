@@ -1,13 +1,16 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:mobx/mobx.dart';
 import 'package:take_home_assignment/models/i_timer_model.dart';
+import 'package:take_home_assignment/resources/audio/app_audio.dart';
 
 part 'countdown_timer_store.g.dart';
 
 class CountdownTimerStore = _CountdownTimerStoreBase with _$CountdownTimerStore;
 
 abstract class _CountdownTimerStoreBase with Store {
+  AudioPlayer _audioPlayer = AudioPlayer();
   @observable
   int secondsRemaining = 0;
 
@@ -28,6 +31,7 @@ abstract class _CountdownTimerStoreBase with Store {
         secondsRemaining = secondsRemaining - 1;
         if (secondsRemaining == 0) {
           _timer?.cancel();
+          _audioPlayer.play(AssetSource(AppAudios.timerCompletionTune));
           isFinished = true;
         }
       });

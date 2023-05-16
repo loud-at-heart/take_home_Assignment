@@ -88,7 +88,7 @@ class _TimerHomeState extends State<TimerHome> {
                     top: Spacing.margin14,
                   ),
                   child:
-                      Text("No timers active.\nPress here to start a new one"),
+                      Text(AppLocalizations.of(context).noTimerLabel),
                 ),
                 SvgPicture.asset(
                   AppImages.iGuide,

@@ -3,7 +3,8 @@ version: 1.0.0+1
 description: A new Flutter project.
 environment: 
   sdk: '>=2.12.0 <3.0.0'
-dependencies: 
+dependencies:
+  audioplayers: ^4.0.1
   connectivity_plus: ^4.0.0
   cupertino_icons: ^1.0.5
   flutter_mobx: ^2.0.0
@@ -40,6 +41,7 @@ flutter_icons:
 flutter: 
   assets: 
     - assets/svg_icons/
+    - assets/audio/
   fonts: 
     - 
       family: SFUIDisplay

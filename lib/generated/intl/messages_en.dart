@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hourHint": MessageLookupByLibrary.simpleMessage("HH"),
         "markComplete": MessageLookupByLibrary.simpleMessage("MARK COMPLETE"),
         "minHint": MessageLookupByLibrary.simpleMessage("MM"),
+        "noTimerLabel": MessageLookupByLibrary.simpleMessage(
+            "No timers active.\nPress here to start a new one"),
         "secHint": MessageLookupByLibrary.simpleMessage("SS"),
         "subtitleError":
             MessageLookupByLibrary.simpleMessage("Please enter description"),
