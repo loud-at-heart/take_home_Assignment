@@ -44,3 +44,14 @@ class ITimerModel with _$ITimerModel {
   factory ITimerModel.fromJson(Map<String, dynamic> json) =>
       _$ITimerModelFromJson(json);
 }
+
+
+extension ITimerModelParser on ITimerModel? {
+  Map<String, dynamic> get toDbJson => {
+    "id": this?.id,
+    "title": this?.title,
+    "subtitle": this?.subtitle,
+    "second": this?.second,
+    "finished": this?.finished ?? false ? 1 : 0,
+  };
+}

@@ -36,7 +36,7 @@ class DBManager {
   }
 
   Future<void> updateTimer(ITimerModel timerModel) async {
-    await _database?.update(DBConstants.tableName, timerModel.toJson(), where: '${DBConstants.field_id} = ?', whereArgs: [timerModel.id]);
+    await _database?.update(DBConstants.tableName, timerModel.toDbJson, where: '${DBConstants.field_id} = ?', whereArgs: [timerModel.id]);
   }
 
   Future<void> deleteTimer(ITimerModel timer) async {

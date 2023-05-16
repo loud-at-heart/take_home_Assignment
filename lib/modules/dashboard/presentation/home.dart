@@ -20,7 +20,7 @@ class TimerHome extends StatefulWidget {
   State<TimerHome> createState() => _TimerHomeState();
 }
 
-class _TimerHomeState extends State<TimerHome> {
+class _TimerHomeState extends State<TimerHome>{
   //stores:---------------------------------------------------------------------
   late TimerListStore _timerListStore;
 

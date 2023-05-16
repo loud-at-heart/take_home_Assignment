@@ -61,6 +61,7 @@ abstract class _TimerListStore with Store {
       finished: true,
     );
     dbManager?.updateTimer(updatedTimer);
+    // _loadList();
     timerList[timerList.indexWhere((t) => t.id == timer.id)] = updatedTimer;
     var temp =  timerList.removeAt(timerList.indexWhere((t) => t.id == timer.id));
     timerList.insert(0, temp);
