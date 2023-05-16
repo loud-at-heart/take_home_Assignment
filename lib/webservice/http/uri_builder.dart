@@ -1,5 +1,3 @@
-import 'package:take_home_assignment/utils/utils.dart';
-
 class UriBuilder {
   factory UriBuilder({
     required String baseUrlAuthority,
@@ -18,25 +16,20 @@ class UriBuilder {
 
   static UriBuilder? _instance;
 
-  final _data = '/data';
-  final _ver = '/2.5';
-  final _weather = '/weather';
-  final _forecast = '/forecast';
+  final _api = '/api';
+  final _users = '/users';
 
   static UriBuilder? get get {
     return _instance;
   }
 
-  Uri getWeatherData({double? lat, double? long, bool isForecast = false}) {
+  Uri getPageDat({int page = 2}) {
     Map<String, String> qParams = {
-      'lat': '$lat',
-      'lon': '$long',
-      'units': 'metric',
-      'appid': WeatherUtils.APPID,
+      'page': '$page',
     };
     return Uri.https(
       _baseUrlAuthority,
-      _data + _ver + (isForecast ? _forecast : _weather),
+      _api + _users,
       qParams,
     );
   }

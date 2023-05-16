@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:take_home_assignment/models/weather_data.dart';
-
 class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 
@@ -115,46 +113,6 @@ class WeatherUtils {
         Colors.teal,
       ];
     }
-  }
-
-  static List<WeatherData> getAverageWeatherData(List<WeatherData> rawData) {
-    List<WeatherData> res = [];
-    int lengthOfBatch = 0;
-    int daysToConsider = 4;
-    int daysConsidered = 0;
-    double avgTemp = 0.0;
-    int avgCondition = 0;
-    int dayRecorded = DateTime.now().day;
-    for (int i = 0; i < rawData.length; i++) {
-      DateTime formattedTime = timestamp2DateTime(rawData[i].date);
-      if (daysConsidered != daysToConsider &&
-          formattedTime.day >= dayRecorded) {
-        if (formattedTime.day == dayRecorded) {
-          lengthOfBatch = lengthOfBatch + 1;
-          avgTemp += rawData[i].temp;
-          avgCondition += rawData[i].condition ?? 0;
-        } else {
-          daysConsidered = daysConsidered + 1;
-          avgCondition = (avgCondition / lengthOfBatch).round();
-          avgTemp = (avgTemp / lengthOfBatch).toPrecision(2);
-          dayRecorded = formattedTime.day;
-          res.add(
-            WeatherData(
-              name: rawData[i].name,
-              temp: avgTemp,
-              main: rawData[i].main,
-              icon: rawData[i].icon,
-              condition: avgCondition,
-              date: rawData[i].date,
-            ),
-          );
-          avgCondition = 0;
-          avgTemp = 0.0;
-          lengthOfBatch = 0;
-        }
-      }
-    }
-    return res;
   }
 
   static Future<bool> internetConnectivity() async {
