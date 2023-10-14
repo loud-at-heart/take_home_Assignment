@@ -65,6 +65,10 @@ class ServerResponse {
     return utf8.decode(response!.bodyBytes);
   }
 
+  List<dynamic> getBodyList() {
+    return jsonDecode(utf8.decode(response!.bodyBytes)) as List<dynamic>;
+  }
+
   Map<String, dynamic>? getBodyJsonMap() {
     return jsonDecode(utf8.decode(response!.bodyBytes)) as Map<String, dynamic>;
   }

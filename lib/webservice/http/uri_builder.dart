@@ -18,26 +18,16 @@ class UriBuilder {
 
   static UriBuilder? _instance;
 
-  final _data = '/data';
-  final _ver = '/2.5';
-  final _weather = '/weather';
-  final _forecast = '/forecast';
+
+  final _post = '/posts';
 
   static UriBuilder? get get {
     return _instance;
   }
 
-  Uri getWeatherData({double? lat, double? long, bool isForecast = false}) {
-    Map<String, String> qParams = {
-      'lat': '$lat',
-      'lon': '$long',
-      'units': 'metric',
-      'appid': WeatherUtils.APPID,
-    };
-    return Uri.https(
-      _baseUrlAuthority,
-      _data + _ver + (isForecast ? _forecast : _weather),
-      qParams,
-    );
+  Uri getNewsData({
+    int? id,
+  }) {
+    return Uri.https(_baseUrlAuthority, _post + "${id != null ? "/$id" : ""}");
   }
 }

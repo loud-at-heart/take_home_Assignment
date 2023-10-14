@@ -14,13 +14,9 @@ void main() {
 
 defaultMain() {
   WidgetsFlutterBinding.ensureInitialized();
-  BlocOverrides.runZoned(
-    () {
-      DI().initialize();
-      runApp(const MyApp());
-    },
-    blocObserver: AppBlocObserver(),
-  );
+  Bloc.observer = AppBlocObserver();
+  DI().initialize();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {

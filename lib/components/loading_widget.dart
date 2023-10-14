@@ -15,10 +15,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
       body: Container(
         child: Center(
           child: CircularProgressIndicator(
-            color: AppColors.white,
+            color: AppColors.purple,
           ),
         ),
-        color: AppColors.black,
+        color: AppColors.white,
       ),
     );
   }
