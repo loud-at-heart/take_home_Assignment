@@ -95,9 +95,9 @@ class NewsListScreen extends StatelessWidget {
                                             );
                                           },
                                           tileColor: AppColors.white,
-                                          contentPadding: EdgeInsets.all(8.0),
+                                          contentPadding: EdgeInsets.all(Spacing.margin8),
                                           subtitle: Text(
-                                            "${model?.body?.substring(0, 20) ?? "Description not available"} ...",
+                                            "${model?.body?.substring(0, 50) ?? "Description not available"} ...",
                                           ),
                                           title: Text(
                                             model?.title ?? '',
