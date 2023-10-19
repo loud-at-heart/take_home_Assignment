@@ -1,3 +1,4 @@
+import 'package:take_home_assignment/models/comments_model.dart';
 import 'package:take_home_assignment/models/news_model.dart';
 import 'package:take_home_assignment/models/error_response.dart';
 import 'package:take_home_assignment/resources/network/network_connectivity.dart';
@@ -10,6 +11,10 @@ abstract class NewsRepository extends BaseRepository {
   NewsRepository(AppConnectivity networkManager) : super(networkManager);
 
   Future<DataLoadResult<dynamic>> requestData({
+    int? id,
+  });
+
+  Future<DataLoadResult<dynamic>> requestCommentsData({
     int? id,
   });
 }
@@ -38,6 +43,30 @@ class NewsRepositoryImpl extends NewsRepository {
       var updatedRes = {'newsModelList':response.getBodyList()};
       return DataLoadResult(
         data: NewsModelList.fromJson(
+          updatedRes,
+        ),
+      );
+    }
+    return DataLoadResult<ErrorResponse>(
+      error: LoadingError.HTTP_INTERNAL_SERVER_ERROR,
+      data: ErrorResponse.fromJson(
+        response.getBodyJsonMap()!,
+      ),
+    );
+  }
+
+  @override
+  Future<DataLoadResult> requestCommentsData({int? id}) async {
+    final uri = uriBuilder.getCommentsData(id: id);
+
+    final request = createJSONRequest(RequestMethods.GET, uri);
+
+    final response = await httpClient.sendRequest(request);
+
+    if (response.isSuccessful()) {
+      var updatedRes = {'commentsModelList':response.getBodyList()};
+      return DataLoadResult(
+        data: CommentsModelList.fromJson(
           updatedRes,
         ),
       );

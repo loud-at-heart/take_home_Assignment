@@ -33,7 +33,7 @@ class NewsListScreen extends StatelessWidget {
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
-            body: (state is PopulateDataState)
+            body: (state is PopulateNewsDataState)
                 ? NestedScrollView(
                     physics: const ClampingScrollPhysics(),
                     headerSliverBuilder:
@@ -95,7 +95,8 @@ class NewsListScreen extends StatelessWidget {
                                             );
                                           },
                                           tileColor: AppColors.white,
-                                          contentPadding: EdgeInsets.all(Spacing.margin8),
+                                          contentPadding:
+                                              EdgeInsets.all(Spacing.margin8),
                                           subtitle: Text(
                                             "${model?.body?.substring(0, 50) ?? "Description not available"} ...",
                                           ),
@@ -120,6 +121,10 @@ class NewsListScreen extends StatelessWidget {
           ),
         );
       },
+      buildWhen: _rebuildState,
     );
   }
+
+  bool _rebuildState(NewsState previous, NewsState current) =>
+      current is PopulateNewsDataState;
 }

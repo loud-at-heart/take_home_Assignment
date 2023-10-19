@@ -62,9 +62,9 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
               FadeTransition(
                 opacity: animation!,
                 child: Hero(
-                  tag: 'News',
+                  tag: 'TODO',
                   child: Text(
-                    'News',
+                    'TODO',
                     style:
                         AppTextStyles.bold(FontSize.large48, AppColors.purple),
                   ),

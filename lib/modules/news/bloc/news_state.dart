@@ -5,10 +5,16 @@ abstract class NewsState {}
 
 class NewsInitial extends NewsState {}
 
-class PopulateDataState extends NewsState {
-  PopulateDataState(this.newsRes);
+class PopulateNewsDataState extends NewsState {
+  PopulateNewsDataState(this.newsRes);
 
   final NewsModelList? newsRes;
+}
+
+class PopulateCommentsDataState extends NewsState {
+  PopulateCommentsDataState(this.commentList);
+
+  final CommentsModelList? commentList;
 }
 
 class NoInternetState extends NewsState {}

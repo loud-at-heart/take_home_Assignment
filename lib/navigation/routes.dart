@@ -7,6 +7,8 @@ import 'package:take_home_assignment/modules/news/bloc/news_bloc.dart';
 import 'package:take_home_assignment/modules/news/view/details_screen.dart';
 import 'package:take_home_assignment/modules/news/view/news_screen.dart';
 import 'package:take_home_assignment/modules/static/splash_screen.dart';
+import 'package:take_home_assignment/modules/todo/bloc/todo_bloc.dart';
+import 'package:take_home_assignment/modules/todo/view/todo_route.dart';
 
 class Routes {
   Routes._();
@@ -21,19 +23,27 @@ class Routes {
     switch (settings.name) {
       case mainScreen:
         return MaterialPageRoute(builder: (context) {
-          return BlocProvider<NewsBloc>(
-            create: (context) => NewsBloc(
-              newsRepository: Injector().get(),
-            )..add(GetDataEvent()),
-            child: const NewsListScreen(),
+          return BlocProvider<TodoBloc>(
+            create: (context) =>
+            TodoBloc(
+              todoRepository: Injector().get(),
+            )
+              ..add(GetTodoDataEvent()),
+            child: const TodoScreen(),
           );
         });
       case detailsScreen:
         final NewsModel args = settings.arguments as NewsModel;
         return MaterialPageRoute(builder: (context) {
-          return DetailsScreen(model: args);
+          return BlocProvider(
+              create: (context) =>
+                  NewsBloc(
+                    newsRepository: Injector().get(),
+                  )..add(GetCommentsEvent(model: args)),
+            child: DetailsScreen(model: args),
+          );
         });
-        case noInternet:
+      case noInternet:
         return MaterialPageRoute(builder: (context) {
           return NoInternet();
         });
@@ -45,7 +55,8 @@ class Routes {
   }
 
 // get Routes
-  static Map<String, Widget Function(BuildContext context)> get appRoutes => {
+  static Map<String, Widget Function(BuildContext context)> get appRoutes =>
+      {
         Routes.splashScreen: (BuildContext context) => const SplashPage(),
       };
 
