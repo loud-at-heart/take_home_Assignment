@@ -24,6 +24,16 @@ class RupeeFormatter {
     decimalDigits: 0, // change it to get decimal places
     symbol: '₹',
   );
+
+  static String moneyFormat(String price) {
+    if (price.length > 2) {
+      var value = price;
+      value = value.replaceAll(RegExp(r'\D'), '');
+      value = value.replaceAll(RegExp(r'\B(?=(\d\d)+(\d)(?!\d))'), ',');
+      return value;
+    }
+    return price;
+  }
 }
 
 class NewsUtils {
@@ -50,3 +60,31 @@ extension Ex on double {
 DateTime timestamp2DateTime(dynamic date) =>
     DateTime.fromMillisecondsSinceEpoch((date as num).toInt() * 1000,
         isUtc: true);
+
+
+class AppColorFilter {
+  AppColorFilter._();
+
+  static const ColorFilter disabledFilter = ColorFilter.matrix(<double>[
+    0.2126,
+    0.7152,
+    0.0722,
+    0,
+    0,
+    0.2126,
+    0.7152,
+    0.0722,
+    0,
+    0,
+    0.2126,
+    0.7152,
+    0.0722,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+  ]);
+}

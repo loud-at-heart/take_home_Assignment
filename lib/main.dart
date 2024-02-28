@@ -26,6 +26,9 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+final RouteObserver<ModalRoute<void>> routeObserver =
+RouteObserver<ModalRoute<void>>();
+
 class _MyAppState extends State<MyApp> {
   final GlobalKey<ScaffoldMessengerState> scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
@@ -52,8 +55,8 @@ class _MyAppState extends State<MyApp> {
         routes: Routes.appRoutes,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: const Color(0xFF6E00F8),
-          fontFamily: AppFontFamilies.SpartanMB,
+          primaryColor: const Color(0xFF15803D),
+          fontFamily: AppFontFamilies.Inter,
         ),
         onGenerateRoute: (s) => Routes.onGenerateRoute(s),
       ),

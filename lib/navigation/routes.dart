@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:take_home_assignment/components/no_internet_screen.dart';
-import 'package:take_home_assignment/models/news_model.dart';
-import 'package:take_home_assignment/modules/news/bloc/news_bloc.dart';
-import 'package:take_home_assignment/modules/news/view/details_screen.dart';
-import 'package:take_home_assignment/modules/news/view/news_screen.dart';
+import 'package:take_home_assignment/modules/detail_screen/presentation/details_screen.dart';
+import 'package:take_home_assignment/modules/payment_screen/bloc/payments_bloc.dart';
+import 'package:take_home_assignment/modules/payment_screen/presentation/payments.dart';
+import 'package:take_home_assignment/modules/payment_screen/presentation/progress_screen.dart';
 import 'package:take_home_assignment/modules/static/splash_screen.dart';
-import 'package:take_home_assignment/modules/todo/bloc/todo_bloc.dart';
-import 'package:take_home_assignment/modules/todo/view/todo_route.dart';
 
 class Routes {
   Routes._();
 
   static const mainScreen = '/main_route';
-  static const detailsScreen = '/details_route';
+  static const paymentsScreen = '/payments_screen';
+  static const progressScreen = '/progress_screen';
   static const splashScreen = '/splash_screen';
   static const noInternet = '/no_internet';
 
@@ -23,24 +21,23 @@ class Routes {
     switch (settings.name) {
       case mainScreen:
         return MaterialPageRoute(builder: (context) {
-          return BlocProvider<TodoBloc>(
-            create: (context) =>
-            TodoBloc(
-              todoRepository: Injector().get(),
-            )
-              ..add(GetTodoDataEvent()),
-            child: const TodoScreen(),
+          return DetailScreen();
+        });
+      case paymentsScreen:
+        return MaterialPageRoute(builder: (context) {
+          return BlocProvider<PaymentsBloc>(
+            create: (context) => PaymentsBloc(),
+            child: PaymentsScreen(),
           );
         });
-      case detailsScreen:
-        final NewsModel args = settings.arguments as NewsModel;
+      case progressScreen:
         return MaterialPageRoute(builder: (context) {
-          return BlocProvider(
-              create: (context) =>
-                  NewsBloc(
-                    newsRepository: Injector().get(),
-                  )..add(GetCommentsEvent(model: args)),
-            child: DetailsScreen(model: args),
+          return BlocProvider<PaymentsBloc>(
+            create: (context) => PaymentsBloc()
+              ..add(
+                InitiateProgressScreenEvent(),
+              ),
+            child: ProgressScreen(),
           );
         });
       case noInternet:
@@ -55,8 +52,7 @@ class Routes {
   }
 
 // get Routes
-  static Map<String, Widget Function(BuildContext context)> get appRoutes =>
-      {
+  static Map<String, Widget Function(BuildContext context)> get appRoutes => {
         Routes.splashScreen: (BuildContext context) => const SplashPage(),
       };
 

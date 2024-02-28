@@ -11,6 +11,7 @@ class Spacing {
   static const double margin12 = 12.0;
   static const double margin14 = 14.0;
   static const double margin24 = 24.0;
+  static const double margin28 = 28.0;
   static const double margin22 = 22.0;
   static const double margin58 = 58.0;
   static const double margin60 = 60.0;
@@ -19,6 +20,7 @@ class Spacing {
   static const double margin9 = 9.0;
   static const double margin8 = 8.0;
   static const double margin5 = 5.0;
+  static const double margin4 = 4.0;
   static const double margin40 = 40.0;
   static const double margin50 = 50.0;
   static const double margin10 = 10.0;
@@ -27,6 +29,7 @@ class Spacing {
   static const double smallMargin = 8;
   static const double margin6 = 6;
   static const double halfSmallMargin = 4;
+  static const double margin3 = 3;
   static const double verySmallMargin = 2;
 
   //Height

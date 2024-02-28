@@ -5,6 +5,7 @@ class AppFontFamilies {
   static const String Poppins = "Poppins";
   static const String Roboto = "Roboto";
   static const String SpartanMB = "Spartan MB";
+  static const String Inter = "Inter";
 }
 
 class AppTextStyles {
@@ -16,6 +17,7 @@ class AppTextStyles {
       fontWeight: AppFontWeight.normal,
       color: textColor,
       height: height ?? 1.0,
+      fontFamily: AppFontFamilies.Inter,
       decoration: TextDecoration.none,
     );
   }
@@ -25,6 +27,7 @@ class AppTextStyles {
       fontSize: textFont,
       fontWeight: AppFontWeight.medium,
       color: textColor,
+      fontFamily: AppFontFamilies.Inter,
       decoration: TextDecoration.none,
     );
   }
@@ -36,6 +39,19 @@ class AppTextStyles {
       fontWeight: AppFontWeight.bold,
       color: textColor,
       decoration: TextDecoration.none,
+      fontFamily: AppFontFamilies.Inter,
+      height: height ?? 1.0,
+    );
+  }
+
+  static TextStyle semiBold(double textFont, Color textColor,
+      {double? height}) {
+    return TextStyle(
+      fontSize: textFont,
+      fontWeight: AppFontWeight.semiBold,
+      color: textColor,
+      decoration: TextDecoration.none,
+      fontFamily: AppFontFamilies.Inter,
       height: height ?? 1.0,
     );
   }

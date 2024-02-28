@@ -46,27 +46,13 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           width: double.maxFinite,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               FadeTransition(
                 opacity: animation!,
                 child: Hero(
                   tag: 'Flutter',
-                  child: Text(
-                    'Flutter',
-                    style:
-                        AppTextStyles.bold(FontSize.large48, AppColors.purple),
-                  ),
-                ),
-              ),
-              FadeTransition(
-                opacity: animation!,
-                child: Hero(
-                  tag: 'TODO',
-                  child: Text(
-                    'TODO',
-                    style:
-                        AppTextStyles.bold(FontSize.large48, AppColors.purple),
+                  child: Center(
+                    child: Image.asset('assets/icon/tap_invest.png'),
                   ),
                 ),
               ),

@@ -1,6 +1,4 @@
 import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:take_home_assignment/modules/news/data/news_repository.dart';
-import 'package:take_home_assignment/modules/todo/data/todo_repository.dart';
 import 'package:take_home_assignment/resources/network/network_connectivity.dart';
 import 'package:take_home_assignment/webservice/http/http_client.dart';
 import 'package:take_home_assignment/webservice/http/uri_builder.dart';
@@ -18,8 +16,8 @@ class DI {
     //URI Builder
     injector.map<UriBuilder>(
       (injector) {
-        const _uRL = 'mocki.io';
-        return UriBuilder(baseUrlAuthority: _uRL);
+        const _url = 'mocki.io';
+        return UriBuilder(baseUrlAuthority: _url);
       },
       isSingleton: false,
     );
@@ -28,24 +26,6 @@ class DI {
     injector.map<HttpClient>(
       (injector) => AppHttpClient(uriBuilder: injector.get()),
       isSingleton: true,
-    );
-
-    //News Repository
-    injector.map<NewsRepository>(
-      (injector) => NewsRepositoryImpl(
-        httpClient: injector.get(),
-        uriBuilder: injector.get(),
-        networkManager: injector.get(),
-      ),
-    );
-
-    //Todoo Repository
-    injector.map<TodoRepository>(
-      (injector) => TodoRepositoryImpl(
-        httpClient: injector.get(),
-        uriBuilder: injector.get(),
-        networkManager: injector.get(),
-      ),
     );
   }
 }
