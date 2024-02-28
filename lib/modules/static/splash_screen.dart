@@ -24,15 +24,10 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     controller?.forward();
     Timer(
         const Duration(seconds: 3),
-        () async => await NewsUtils.internetConnectivity()
-            ? Navigator.pushReplacementNamed(
-                context,
-                Routes.mainScreen,
-              )
-            : Navigator.pushReplacementNamed(
-                context,
-                Routes.noInternet,
-              ));
+        () => Navigator.pushReplacementNamed(
+          context,
+          Routes.mainScreen,
+        ));
     super.initState();
   }
 

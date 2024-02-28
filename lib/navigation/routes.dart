@@ -40,10 +40,6 @@ class Routes {
             child: ProgressScreen(),
           );
         });
-      case noInternet:
-        return MaterialPageRoute(builder: (context) {
-          return NoInternet();
-        });
       default:
         return MaterialPageRoute(builder: (context) {
           return const SplashPage();
