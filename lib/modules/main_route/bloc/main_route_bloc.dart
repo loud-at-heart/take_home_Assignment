@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:take_home_assignment/modules/main_route/view/plan_selector.dart';
 
 part 'main_route_event.dart';
 

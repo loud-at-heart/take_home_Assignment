@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:take_home_assignment/components/app_button.dart';
-import 'package:take_home_assignment/components/measure_widget.dart';
 import 'package:take_home_assignment/modules/main_route/view/plan_selector.dart';
 import 'package:take_home_assignment/modules/main_route/bloc/main_route_bloc.dart';
 import 'package:take_home_assignment/navigation/routes.dart';
@@ -25,14 +22,14 @@ class LimitSelector extends StatefulWidget {
 }
 
 class _LimitSelectorState extends State<LimitSelector> {
-  final _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Size? listTileSize;
   double initialVal = 150000;
 
   @override
   void initState() {
     BlocProvider.of<MainRouteBloc>(context)
-      ..add(InitStackSheetEvent(initialVal));
+      .add(InitStackSheetEvent(initialVal));
     super.initState();
   }
 
@@ -65,7 +62,7 @@ class _LimitSelectorState extends State<LimitSelector> {
         return WillPopScope(
           onWillPop: () async {
             BlocProvider.of<MainRouteBloc>(context)
-              ..add(
+              .add(
                 CollapsePlanSelectorExpandLimitSelectorSheetEvent(
                   initialVal,
                 ),
@@ -82,7 +79,7 @@ class _LimitSelectorState extends State<LimitSelector> {
               ),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.help_outline_rounded),
+                  icon: const Icon(Icons.help_outline_rounded),
                   onPressed: () {},
                 )
               ],
@@ -103,7 +100,7 @@ class _LimitSelectorState extends State<LimitSelector> {
                                     Radius.circular(Dimensions.largeRadius30),
                               ),
                               color: AppColors.color171922),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: Spacing.margin24,
                               vertical: Spacing.margin40),
                           child: Column(
@@ -120,7 +117,7 @@ class _LimitSelectorState extends State<LimitSelector> {
                               Spacing.sizeBoxHt24,
                               Center(
                                 child: Card(
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(
                                           Dimensions.largeRadius30),
@@ -128,7 +125,7 @@ class _LimitSelectorState extends State<LimitSelector> {
                                   ),
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                       vertical: Spacing.margin40,
                                     ),
                                     child: SleekCircularSlider(
@@ -184,7 +181,7 @@ class _LimitSelectorState extends State<LimitSelector> {
                         child: AppButton(
                             onTap: () {
                               BlocProvider.of<MainRouteBloc>(context)
-                                ..add(
+                                .add(
                                     ExpandPlanSelectorCollapseLimitSelectorSheetEvent(
                                         initialVal));
                             },
@@ -210,7 +207,7 @@ class _LimitSelectorState extends State<LimitSelector> {
                               ),
                               color: AppColors.color171922),
                           child: ListTile(
-                            shape: RoundedRectangleBorder(
+                            shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
                               topRight:
                                   Radius.circular(Dimensions.largeRadius30),
@@ -219,11 +216,11 @@ class _LimitSelectorState extends State<LimitSelector> {
                             )),
                             onTap: () {
                               BlocProvider.of<MainRouteBloc>(context)
-                                ..add(
+                                .add(
                                     CollapsePlanSelectorExpandLimitSelectorSheetEvent(state.selectedVal));
                               Navigator.pop(context);
                             },
-                            trailing: Icon(
+                            trailing: const Icon(
                               Icons.keyboard_arrow_down_rounded,
                               color: AppColors.white,
                             ),
@@ -246,8 +243,9 @@ class _LimitSelectorState extends State<LimitSelector> {
         );
       },
       listener: (context, state) {
-        if (state is ExpandedPlanSelectorState)
+        if (state is ExpandedPlanSelectorState) {
           displayLimitSelectorPersistentBottomSheet(state.selectedVal);
+        }
       },
       buildWhen: (prev, curr) =>
           curr is ExpandedLimitSelectorState ||
