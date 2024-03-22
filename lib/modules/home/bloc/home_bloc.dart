@@ -40,7 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _handleSearchGifEvent(SearchGifEvent event, Emitter<HomeState> emit,) async {
     if(!isNullOrEmpty(event.query)){
       _offset =0;
-      _searchedDataList = []
+      _searchedDataList = [];
       final _response =
           await homeRepository.searchData(query: event.query ?? '');
     _searchedDataList = _response.data as GifModelList;
