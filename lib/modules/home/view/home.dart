@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:take_home_assignment/components/app_snackbar.dart';
 import 'package:take_home_assignment/models/gif_model.dart';
 import 'package:take_home_assignment/modules/home/bloc/home_bloc.dart';
 import 'package:take_home_assignment/modules/home/components/search_widget.dart';
+import 'package:take_home_assignment/navigation/routes.dart';
 import 'package:take_home_assignment/style/spacing.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,7 +44,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeBloc, HomeState>(
       listener: (context, state) {
-        // TODO: implement listener
+        if(state is NoInternetState){
+          Navigator.pushReplacementNamed(
+            context,
+            Routes.noInternet,
+          );
+        }else if(state is RequestFailedWithMessageState){
+          AppSnackBar().showSnackBar(
+            context,
+            text: state.errorMessage ?? "Something went wrong ...",
+          );
+        }
       },
       builder: (context, state) {
         return Scaffold(

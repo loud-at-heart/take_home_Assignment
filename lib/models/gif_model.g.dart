@@ -6,10 +6,11 @@ part of 'gif_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GifModelList _$GifModelListFromJson(Map<String, dynamic> json) => GifModelList()
-  ..data = (json['data'] as List<dynamic>?)
-      ?.map((e) => GifModel.fromJson(e as Map<String, dynamic>))
-      .toList();
+GifModelList _$GifModelListFromJson(Map<String, dynamic> json) => GifModelList(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => GifModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 GifModel _$GifModelFromJson(Map<String, dynamic> json) => GifModel(
       id: json['id'] as String?,

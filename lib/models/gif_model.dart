@@ -6,7 +6,7 @@ part "gif_model.g.dart";
   createToJson: false,
 )
 class GifModelList {
-  GifModelList();
+  GifModelList({this.data});
 
   factory GifModelList.fromJson(Map<String, dynamic> json) =>
       _$GifModelListFromJson(json);

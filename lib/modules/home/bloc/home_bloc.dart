@@ -63,6 +63,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     DataLoadResult result,
     Emitter<HomeState> emit,
   ) async* {
+    emit(ShowAllTrendingGifState(GifModelList(data: [])));
     if (result.error == LoadingError.NO_CONNECTION) {
       emit(NoInternetState());
     } else {
