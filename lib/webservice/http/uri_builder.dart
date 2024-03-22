@@ -16,31 +16,36 @@ class UriBuilder {
 
   static UriBuilder? _instance;
 
-  final _post = '/posts';
-  final _comments = '/comments';
-  final _postId = 'postId';
   final _v1 = '/v1';
-  final _hash = '/78877c96-1af5-4d21-b380-4990c529eb98';
+  final _gifs = '/gifs';
+  final _trending = '/trending';
+  final _search = '/search';
 
   static UriBuilder? get get {
     return _instance;
   }
 
-  Uri getNewsData({
-    int? id,
+  Uri getTrendingGifs({
+    int offset = 0,
   }) {
-    return Uri.https(_baseUrlAuthority, _post + "${id != null ? "/$id" : ""}");
+    final queryParam = {
+      "api_key": "88Fnlr0VO1TnZZTdXxJCzIqfPVFwQlWM",
+      "limit": "25",
+      "offset": "$offset"
+    };
+    return Uri.https(_baseUrlAuthority, "$_v1$_gifs$_trending", queryParam);
   }
 
-  Uri getCommentsData({
-    int? id,
+  Uri getSearchedGifs({
+    int offset = 0,
+    String query = "",
   }) {
-    final queryParams = {_postId: "$id"};
-
-    return Uri.https(_baseUrlAuthority, _comments, queryParams);
-  }
-
-  Uri getTodoData() {
-    return Uri.https(_baseUrlAuthority, _v1 + _hash);
+    final queryParam = {
+      "api_key": "88Fnlr0VO1TnZZTdXxJCzIqfPVFwQlWM",
+      "limit": "25",
+      "offset": "$offset",
+      "q": query
+    };
+    return Uri.https(_baseUrlAuthority, "$_v1$_gifs$_search", queryParam);
   }
 }

@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:take_home_assignment/navigation/routes.dart';
-import 'package:take_home_assignment/style/app_colors.dart';
-import 'package:take_home_assignment/style/app_text_styles.dart';
 import 'package:take_home_assignment/utils/utils.dart';
 
 class SplashPage extends StatefulWidget {
@@ -24,9 +22,14 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     controller?.forward();
     Timer(
         const Duration(seconds: 3),
-        () => Navigator.pushReplacementNamed(
+            () async => await NewsUtils.internetConnectivity()
+            ? Navigator.pushReplacementNamed(
           context,
           Routes.mainScreen,
+        )
+            : Navigator.pushReplacementNamed(
+          context,
+          Routes.noInternet,
         ));
     super.initState();
   }
@@ -47,7 +50,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                 child: Hero(
                   tag: 'Flutter',
                   child: Center(
-                    child: Image.asset('assets/icon/tap_invest.png'),
+                    child: Image.asset('assets/icon/the_proven_club.jpeg'),
                   ),
                 ),
               ),
