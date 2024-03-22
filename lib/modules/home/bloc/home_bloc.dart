@@ -23,7 +23,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   GifModelList? _dataList;
   GifModelList? _searchedDataList;
-  int _offset =0;
+  int _offset = 0;
+  String _query = '';
 
   Future<void> _handleInitHomePage(
     InitHomePageEvent event,
@@ -37,26 +38,31 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _handleErrorState(_response, emit);
     }
   }
-  Future<void> _handleSearchGifEvent(SearchGifEvent event, Emitter<HomeState> emit,) async {
-    if(!isNullOrEmpty(event.query)){
-      _offset =0;
+
+  Future<void> _handleSearchGifEvent(
+    SearchGifEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    _query = event.query ?? '';
+    if (!isNullOrEmpty(_query)) {
+      _offset = 0;
       _searchedDataList = null;
-      final _response =
-          await homeRepository.searchData(query: event.query ?? '');
-    _searchedDataList = _response.data as GifModelList;
+      final _response = await homeRepository.searchData(query: _query);
+      _searchedDataList = _response.data as GifModelList;
       if (_response.isSuccessful()) {
         emit(ShowAllTrendingGifState(_searchedDataList));
       } else {
         _handleErrorState(_response, emit);
       }
-    }else{
+    } else {
       emit(ShowAllTrendingGifState(_dataList));
     }
   }
+
   Stream<HomeState> _handleErrorState(
-      DataLoadResult result,
-      Emitter<HomeState> emit,
-      ) async* {
+    DataLoadResult result,
+    Emitter<HomeState> emit,
+  ) async* {
     if (result.error == LoadingError.NO_CONNECTION) {
       emit(NoInternetState());
     } else {
@@ -64,23 +70,37 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Future<void> _handleStartLoadingEvent(StartLoadingEvent event, Emitter<HomeState> emit,) async {
+  Future<void> _handleStartLoadingEvent(
+    StartLoadingEvent event,
+    Emitter<HomeState> emit,
+  ) async {
     emit(LoadingState());
   }
 
-  Future<void> _handleLoadNextDataEvent(LoadNextDataEvent event, Emitter<HomeState> emit,) async {
-    if(isNullOrEmpty(event.query)){
-      final _response = await homeRepository.requestData();
-      _dataList?.data = [...?_dataList?.data,...?(_response.data as GifModelList).data];
+  Future<void> _handleLoadNextDataEvent(
+    LoadNextDataEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    if (isNullOrEmpty(_query)) {
+      _offset = _offset + 25;
+      final _response = await homeRepository.requestData(offset: _offset);
+      _dataList?.data = [
+        ...?_dataList?.data,
+        ...?(_response.data as GifModelList).data
+      ];
       if (_response.isSuccessful()) {
         emit(ShowAllTrendingGifState(_dataList));
       } else {
         _handleErrorState(_response, emit);
       }
-    }else{
+    } else {
+      _offset = _offset + 25;
       final _response =
-      await homeRepository.searchData(query: event.query ?? '');
-      _searchedDataList = _response.data as GifModelList;
+          await homeRepository.searchData(query: _query, offset: _offset);
+      _searchedDataList?.data = [
+        ...?_searchedDataList?.data,
+        ...?(_response.data as GifModelList).data
+      ];
       if (_response.isSuccessful()) {
         emit(ShowAllTrendingGifState(_searchedDataList));
       } else {

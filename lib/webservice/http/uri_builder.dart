@@ -29,7 +29,7 @@ class UriBuilder {
     int offset = 0,
   }) {
     final queryParam = {
-      "api_key": "88Fnlr0VO1TnZZTdXxJCzIqfPVFwQlWM",
+      "api_key": "KUiwhCM64t7t6UV2XzmaBwzvrCoa93gR",
       "limit": "25",
       "offset": "$offset"
     };
@@ -41,7 +41,7 @@ class UriBuilder {
     String query = "",
   }) {
     final queryParam = {
-      "api_key": "88Fnlr0VO1TnZZTdXxJCzIqfPVFwQlWM",
+      "api_key": "KUiwhCM64t7t6UV2XzmaBwzvrCoa93gR",
       "limit": "25",
       "offset": "$offset",
       "q": query

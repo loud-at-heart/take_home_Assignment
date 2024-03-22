@@ -33,10 +33,8 @@ class _HomePageState extends State<HomePage> {
   void onScroll() {
     var position = scroll.position.pixels;
     if (position >= scroll.position.maxScrollExtent - 10) {
-      if (!preventCall) {
-
-        preventCall = true;
-      }
+      BlocProvider.of<HomeBloc>(context)
+          .add(LoadNextDataEvent());
     }
   }
 
@@ -72,6 +70,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSpacing: 4,
                     crossAxisSpacing: 4,
                     itemCount: state.data?.data?.length,
+                    controller: scroll,
                     itemBuilder: (context, index) {
                       return ImageTile(
                         data: state.data?.data?[index],

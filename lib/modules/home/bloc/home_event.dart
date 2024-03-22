@@ -4,12 +4,10 @@ part of 'home_bloc.dart';
 abstract class HomeEvent {}
 
 class InitHomePageEvent extends HomeEvent {}
-class StartLoadingEvent extends HomeEvent {}
-class LoadNextDataEvent extends HomeEvent {
-  LoadNextDataEvent({this.query = ''});
 
-  final String? query;
-}
+class StartLoadingEvent extends HomeEvent {}
+
+class LoadNextDataEvent extends HomeEvent {}
 
 class SearchGifEvent extends HomeEvent {
   SearchGifEvent({required this.query});
