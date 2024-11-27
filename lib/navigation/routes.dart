@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:take_home_assignment/modules/home/bloc/home_bloc.dart';
+import 'package:take_home_assignment/modules/home/bloc/album_bloc.dart';
 import 'package:take_home_assignment/modules/home/view/home.dart';
 import 'package:take_home_assignment/modules/static/splash_screen.dart';
 
@@ -18,9 +18,9 @@ class Routes {
       case mainScreen:
         return MaterialPageRoute(builder: (context) {
           return BlocProvider(
-            create: (context) => HomeBloc(homeRepository: Injector().get())
+            create: (context) => AlbumBloc(homeRepository: Injector().get())
               ..add(
-                InitHomePageEvent(),
+                FetchAlbums(),
               ),
             child: HomePage(),
           );

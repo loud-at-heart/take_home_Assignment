@@ -50,7 +50,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                 child: Hero(
                   tag: 'Flutter',
                   child: Center(
-                    child: Image.asset('assets/icon/the_proven_club.jpeg'),
+                    child: Image.asset('assets/icon/navatech.jpeg'),
                   ),
                 ),
               ),

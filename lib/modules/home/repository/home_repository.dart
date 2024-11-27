@@ -1,5 +1,5 @@
+import 'package:take_home_assignment/models/album_model.dart';
 import 'package:take_home_assignment/models/error_response.dart';
-import 'package:take_home_assignment/models/gif_model.dart';
 import 'package:take_home_assignment/resources/network/network_connectivity.dart';
 import 'package:take_home_assignment/webservice/base_repository.dart';
 import 'package:take_home_assignment/webservice/data_load_result.dart';
@@ -9,8 +9,10 @@ import 'package:take_home_assignment/webservice/http/uri_builder.dart';
 abstract class HomeRepository extends BaseRepository {
   HomeRepository(AppConnectivity networkManager) : super(networkManager);
 
-  Future<DataLoadResult<dynamic>> requestData({int offset = 0});
-  Future<DataLoadResult<dynamic>> searchData({String query ='',int offset = 0});
+  Future<DataLoadResult<dynamic>> getAlbumData({int offset = 0});
+
+  Future<DataLoadResult<dynamic>> getImageData(
+      {String albumId = '', int offset = 0});
 }
 
 class HomeRepositoryImpl extends HomeRepository {
@@ -24,18 +26,18 @@ class HomeRepositoryImpl extends HomeRepository {
   final UriBuilder uriBuilder;
 
   @override
-  Future<DataLoadResult> requestData({int offset = 0}) async {
-    final uri = uriBuilder.getTrendingGifs(offset: offset);
+  Future<DataLoadResult> getAlbumData({int offset = 0}) async {
+    final uri = uriBuilder.getAlbumData(offset: offset);
 
     final request = createJSONRequest(RequestMethods.GET, uri);
 
     final response = await httpClient.sendRequest(request);
 
     if (response.isSuccessful()) {
+      final List<dynamic> albumJson = response.getBodyList();
       return DataLoadResult(
-        data: GifModelList.fromJson(
-          response.getBodyJsonMap()!,
-        ),
+        data: AlbumList(
+            data: albumJson.map((json) => Album.fromJson(json)).toList()),
       );
     }
     return DataLoadResult<ErrorResponse>(
@@ -47,18 +49,19 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<DataLoadResult> searchData({String query = '', int offset = 0}) async {
-    final uri = uriBuilder.getSearchedGifs(query: query,offset: offset);
+  Future<DataLoadResult> getImageData(
+      {String albumId = '', int offset = 0}) async {
+    final uri = uriBuilder.getImageForAlbum(albumId: albumId, offset: offset);
 
     final request = createJSONRequest(RequestMethods.GET, uri);
 
     final response = await httpClient.sendRequest(request);
 
     if (response.isSuccessful()) {
+      final List<dynamic> photoJson = response.getBodyList();
       return DataLoadResult(
-        data: GifModelList.fromJson(
-          response.getBodyJsonMap()!,
-        ),
+        data: PhotoList(
+            data: photoJson.map((json) => Photo.fromJson(json)).toList()),
       );
     }
     return DataLoadResult<ErrorResponse>(

@@ -16,36 +16,32 @@ class UriBuilder {
 
   static UriBuilder? _instance;
 
-  final _v1 = '/v1';
-  final _gifs = '/gifs';
-  final _trending = '/trending';
-  final _search = '/search';
+  final _albums = '/albums';
+  final _photos = '/photos';
 
   static UriBuilder? get get {
     return _instance;
   }
 
-  Uri getTrendingGifs({
+  Uri getAlbumData({
     int offset = 0,
   }) {
     final queryParam = {
-      "api_key": "KUiwhCM64t7t6UV2XzmaBwzvrCoa93gR",
-      "limit": "25",
-      "offset": "$offset"
+      "_start": "$offset",
+      "_limit": "4",
     };
-    return Uri.https(_baseUrlAuthority, "$_v1$_gifs$_trending", queryParam);
+    return Uri.https(_baseUrlAuthority, _albums, queryParam);
   }
 
-  Uri getSearchedGifs({
+  Uri getImageForAlbum({
     int offset = 0,
-    String query = "",
+    String albumId = "",
   }) {
     final queryParam = {
-      "api_key": "KUiwhCM64t7t6UV2XzmaBwzvrCoa93gR",
-      "limit": "25",
-      "offset": "$offset",
-      "q": query
+      "_start": "$offset",
+      "_limit": "4",
+      "albumId": albumId,
     };
-    return Uri.https(_baseUrlAuthority, "$_v1$_gifs$_search", queryParam);
+    return Uri.https(_baseUrlAuthority, _photos, queryParam);
   }
 }

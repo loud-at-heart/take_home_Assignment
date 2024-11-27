@@ -1,121 +1,190 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:take_home_assignment/components/app_snackbar.dart';
-import 'package:take_home_assignment/models/gif_model.dart';
-import 'package:take_home_assignment/modules/home/bloc/home_bloc.dart';
-import 'package:take_home_assignment/modules/home/components/search_widget.dart';
-import 'package:take_home_assignment/navigation/routes.dart';
-import 'package:take_home_assignment/style/spacing.dart';
+import 'package:take_home_assignment/models/album_model.dart';
+import 'package:take_home_assignment/modules/home/bloc/album_bloc.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
+class HomePage extends StatelessWidget {
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Infinite Albums'),
+      ),
+      body: BlocBuilder<AlbumBloc, AlbumState>(
+        builder: (context, state) {
+          if (state is AlbumLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is AlbumLoaded) {
+            return InfiniteAlbumList(
+              albums: state.albums,
+              photos: state.photos,
+            );
+          } else if (state is AlbumError) {
+            return Center(child: Text(state.message));
+          }
+          return Container();
+        },
+      ),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class InfiniteAlbumList extends StatefulWidget {
 
-  var scroll = ScrollController();
-  var preventCall = false;
+  InfiniteAlbumList({required this.albums, required this.photos});
+  final List<Album> albums;
+  final Map<int, List<Photo>> photos;
 
   @override
-  initState() {
-    scroll.addListener(onScroll);
+  _InfiniteAlbumListState createState() => _InfiniteAlbumListState();
+}
+
+class _InfiniteAlbumListState extends State<InfiniteAlbumList> {
+  late ScrollController _verticalController;
+
+  @override
+  void initState() {
     super.initState();
+    _verticalController = ScrollController();
   }
 
   @override
   void dispose() {
-    scroll.removeListener(onScroll);
+    _verticalController.dispose();
     super.dispose();
   }
 
-  void onScroll() {
-    var position = scroll.position.pixels;
-    if (position >= scroll.position.maxScrollExtent - 10) {
-      BlocProvider.of<HomeBloc>(context)
-          .add(LoadNextDataEvent());
-    }
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      controller: _verticalController,
+      itemCount: null, // Infinite
+      itemBuilder: (context, index) {
+        final adjustedIndex = index % widget.albums.length;
+        final album = widget.albums[adjustedIndex];
+        final photos = widget.photos[album.id] ?? [];
+
+        return AlbumRow(
+          album: album,
+          photos: photos,
+        );
+      },
+    );
+  }
+}
+
+class AlbumRow extends StatefulWidget {
+
+  AlbumRow({required this.album, required this.photos});
+  final Album album;
+  final List<Photo> photos;
+
+  @override
+  _AlbumRowState createState() => _AlbumRowState();
+}
+
+class _AlbumRowState extends State<AlbumRow> {
+  late ScrollController _horizontalController;
+
+  @override
+  void initState() {
+    super.initState();
+    _horizontalController = ScrollController();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<HomeBloc, HomeState>(
-      listener: (context, state) {
-        if(state is NoInternetState){
-          Navigator.pushReplacementNamed(
-            context,
-            Routes.noInternet,
-          );
-        }else if(state is RequestFailedWithMessageState){
-          AppSnackBar().showSnackBar(
-            context,
-            text: state.errorMessage ?? "Something went wrong ...",
-          );
-        }
-      },
-      builder: (context, state) {
-        return Scaffold(
-          body: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top:
-                      MediaQuery.of(context).viewPadding.top + Spacing.margin24,
-                  right: Spacing.margin24,
-                  left: Spacing.margin24,
-                  bottom: Spacing.margin24,
-                ),
-                child: SearchWidget(
-                  onDebounceStart: () => BlocProvider.of<HomeBloc>(context)
-                      .add(StartLoadingEvent()),
-                  onChanged: (query) => BlocProvider.of<HomeBloc>(context)
-                      .add(SearchGifEvent(query: query)),
-                ),
+  void dispose() {
+    _horizontalController.dispose();
+    super.dispose();
+  }
+
+  Widget _buildImageWithFallback(Photo photo) {
+    return Container(
+      width: 200,
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          photo.thumbnailUrl,
+          fit: BoxFit.cover,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) {
+              return child;
+            }
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                    loadingProgress.expectedTotalBytes!
+                    : null,
               ),
-              if (state is ShowAllTrendingGifState)
-                Expanded(
-                  child: MasonryGridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    itemCount: state.data?.data?.length,
-                    controller: scroll,
-                    itemBuilder: (context, index) {
-                      return ImageTile(
-                        data: state.data?.data?[index],
-                      );
-                    },
+            );
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              color: Colors.grey[200],
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    color: Colors.grey[600],
+                    size: 32,
                   ),
-                )
-              else
-                Center(child: CircularProgressIndicator())
-            ],
-          ),
-        );
-      },
-      buildWhen: _buildWhen,
+                  SizedBox(height: 8),
+                  Text(
+                    'Image not available',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 
-  bool _buildWhen(HomeState previous, HomeState current) =>
-      current is ShowAllTrendingGifState;
-}
-
-class ImageTile extends StatelessWidget {
-  const ImageTile({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-
-  final GifModel? data;
-
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      'https://i.giphy.com/media/${data?.id}/200.gif',
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            widget.album.title,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 200,
+          child: ListView.builder(
+            controller: _horizontalController,
+            scrollDirection: Axis.horizontal,
+            itemCount: null, // Infinite
+            itemBuilder: (context, index) {
+              if (widget.photos.isEmpty) {
+                return Center(child: CircularProgressIndicator());
+              }
+              final adjustedIndex = index % widget.photos.length;
+              final photo = widget.photos[adjustedIndex];
+
+              return Padding(
+                padding: EdgeInsets.all(8.0),
+                child: _buildImageWithFallback(photo),
+              );
+            },
+          ),
+        ),
+        Divider(),
+      ],
     );
   }
 }

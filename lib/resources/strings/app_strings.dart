@@ -16,20 +16,4 @@ class AppStrings {
   static const String permissionDeniedDialogSubtitle =
       'Read location permission is required to use this feature. You can grant it in app Settings.';
   static const String permissionDeniedDialogGoToSettings = 'Go to settings';
-
-  //images
-  static const String _svgPath = 'assets/svg_icons/';
-  static const String serverNotWorking = _svgPath + 'serverNotWorking.svg';
-  static const String lostConnection = _svgPath + 'lostConnection.svg';
-  static const String somethingWentWrong = _svgPath + 'somethingWentWrong.svg';
-  static const String agrizyLogo = _svgPath + 'agrizyLogo.svg';
-  static const String partners = _svgPath + 'partners.svg';
-  static const String tip = _svgPath + 'tip.svg';
-  static const String contract = _svgPath + 'contract.svg';
-  static const String pitchDeck = _svgPath + 'pitchDeck.svg';
-  static const String back = _svgPath + 'back.svg';
-  static const String check = _svgPath + 'check.svg';
-  static const String checkBackground = _svgPath + 'check_background.svg';
-  static const String docVerify = _svgPath + 'document_verification.svg';
-  static const String finalFlag = _svgPath + 'final_flag.svg';
 }

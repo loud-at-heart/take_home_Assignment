@@ -17,7 +17,7 @@ class DI {
     //URI Builder
     injector.map<UriBuilder>(
       (injector) {
-        const _url = 'api.giphy.com';
+        const _url = 'jsonplaceholder.typicode.com';
         return UriBuilder(baseUrlAuthority: _url);
       },
       isSingleton: false,
