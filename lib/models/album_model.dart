@@ -13,15 +13,15 @@ class AlbumList {
   List<Album>? data;
 }
 
-@JsonSerializable(
-  createToJson: false,
-)
+@JsonSerializable()
 class Album {
   Album({required this.id, required this.title});
 
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
   final int id;
   final String title;
+
+  Map<String, dynamic> toJson() => _$AlbumToJson(this);
 }
 
 @JsonSerializable(
@@ -36,9 +36,7 @@ class PhotoList {
 }
 
 
-@JsonSerializable(
-  createToJson: false,
-)
+@JsonSerializable()
 class Photo {
   Photo({
     required this.id,
@@ -55,4 +53,6 @@ class Photo {
   final String title;
   final String url;
   final String thumbnailUrl;
+
+  Map<String, dynamic> toJson() => _$PhotoToJson(this);
 }

@@ -4,6 +4,7 @@ import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:take_home_assignment/models/album_model.dart';
 import 'package:take_home_assignment/modules/home/bloc/photo_bloc.dart';
 import 'package:take_home_assignment/modules/home/components/album_row.dart';
+import 'package:take_home_assignment/modules/home/services/db_helper.dart';
 
 class InfiniteAlbumList extends StatefulWidget {
   InfiniteAlbumList({
@@ -16,7 +17,8 @@ class InfiniteAlbumList extends StatefulWidget {
   _InfiniteAlbumListState createState() => _InfiniteAlbumListState();
 }
 
-class _InfiniteAlbumListState extends State<InfiniteAlbumList> with AutomaticKeepAliveClientMixin {
+class _InfiniteAlbumListState extends State<InfiniteAlbumList>
+    with AutomaticKeepAliveClientMixin {
   late ScrollController _verticalController;
 
   @override
@@ -43,7 +45,10 @@ class _InfiniteAlbumListState extends State<InfiniteAlbumList> with AutomaticKee
         final album = albumList[adjustedIndex];
 
         return BlocProvider(
-          create: (context) => PhotoBloc(homeRepository: Injector().get()),
+          create: (context) => PhotoBloc(
+            homeRepository: Injector().get(),
+            dbHelper: DatabaseHelper.instance,
+          ),
           child: AlbumRow(
             key: UniqueKey(),
             album: album,
