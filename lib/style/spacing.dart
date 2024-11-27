@@ -17,6 +17,7 @@ class Spacing {
   static const double margin60 = 60.0;
   static const double margin65 = 65.0;
   static const double margin74 = 74.0;
+  static const double margin200 = 200.0;
   static const double margin9 = 9.0;
   static const double margin8 = 8.0;
   static const double margin5 = 5.0;

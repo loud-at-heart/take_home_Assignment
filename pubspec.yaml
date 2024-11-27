@@ -46,6 +46,7 @@ dependencies:
   location: ^5.0.3
   sqflite: ^2.2.0+3
   path: ^1.8.2
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

@@ -8,10 +8,9 @@ class AlbumInitial extends AlbumState {}
 class AlbumLoading extends AlbumState {}
 
 class AlbumLoaded extends AlbumState {
-  AlbumLoaded(this.albums, this.photos);
+  AlbumLoaded(this.albums);
 
-  final List<Album> albums;
-  final Map<int, List<Photo>> photos;
+  final AlbumList albums;
 }
 
 class AlbumError extends AlbumState {
