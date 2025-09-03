@@ -35,7 +35,6 @@ class _TimerCardState extends State<TimerCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      key: UniqueKey(),
       color: AppColors.timerCardColor,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
