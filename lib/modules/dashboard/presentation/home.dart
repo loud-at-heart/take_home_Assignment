@@ -141,6 +141,8 @@ class _TimerHomeState extends State<TimerHome>{
                     return _timerListStore.timerList.length > 0
                         ? ListTile(
                             title: TimerCard(
+                              key: ValueKey(
+                                  _timerListStore.timerList[index].id),
                               timerModel: _timerListStore.timerList[index],
                               onStop: () => _timerListStore.removeTimer(
                                   _timerListStore.timerList[index]),
